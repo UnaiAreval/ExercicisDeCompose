@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 @Composable
 fun Welcome(){
     Column (horizontalAlignment = Alignment.CenterHorizontally){
-        Text("Welcome!")
+        Text(text = "Welcome!")
         Text("Start learning now")
         Button(onClick = {}){
             Text("Login")
