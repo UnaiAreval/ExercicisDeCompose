@@ -12,22 +12,34 @@ import androidx.compose.runtime.setValue
 
 @Composable
 fun secretNum() {
-    val numbers = 0..100
-    val randomNum = numbers.random()
+    var text = remember { mutableStateOf("") }
+    val nums = 0..100
+    val randomNum = nums.random()
 
-    var num by remember { mutableStateOf(0) }
+    var numberString by remember { mutableStateOf("") }
+    var number by remember { mutableStateOf(0) }
 
     Column {
-        /*TextField(
-            value = num,
-            label = { Text(text = "") },
-            onValueChange = { num = it }
-        )*/
+        TextField(
+            value = numberString,
+            label = { Text(text = "Introduiex un nombre de 1 a 100") },
+            onValueChange = { numberString = it }
+        )
 
         Button(onClick = {
-
+            number = numberString.toInt()
+            if (randomNum == number){
+                text.value = "Has encertat!"
+            } else{
+                if (randomNum > number){
+                    text.value = "El número que busques és més gran"
+                } else{
+                    text.value = "El número que busques és més petit"
+                }
+            }
         }){
             Text("IntNum")
         }
+        Text(text.value)
     }
 }
