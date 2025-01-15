@@ -15,6 +15,7 @@ fun secretNum() {
     var text = remember { mutableStateOf("") }
     val nums = 0..100
     val randomNum = remember{nums.random()}
+    var bucleTimes = remember{ mutableStateOf(0)}
 
     var numberString by remember { mutableStateOf("") }
     var number by remember { mutableStateOf(0) }
@@ -33,13 +34,16 @@ fun secretNum() {
             } else{
                 if (randomNum > number){
                     text.value = "El número que busques és més gran"
+                    bucleTimes.value += 1
                 } else{
                     text.value = "El número que busques és més petit"
+                    bucleTimes.value += 1
                 }
             }
         }){
             Text("IntNum")
         }
         Text(text.value)
+        Text("Número d'intents: " + bucleTimes.value)
     }
 }

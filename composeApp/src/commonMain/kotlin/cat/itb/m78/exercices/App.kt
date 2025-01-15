@@ -9,6 +9,7 @@ import androidx.compose.material3.Text*/
 import androidx.compose.runtime.*
 import cat.itb.m78.exercices.State.GoodTime
 import cat.itb.m78.exercices.State.SayHello
+import cat.itb.m78.exercices.State.diceRoller
 import cat.itb.m78.exercices.State.secretNum
 import cat.itb.m78.exercices.Stateless.Contact
 import cat.itb.m78.exercices.Stateless.ContactApp
@@ -18,5 +19,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-
+    secretNum()
 }
