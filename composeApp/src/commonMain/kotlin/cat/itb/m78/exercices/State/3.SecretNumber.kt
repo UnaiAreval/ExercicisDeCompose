@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 fun secretNum() {
     var text = remember { mutableStateOf("") }
     val nums = 0..100
-    val randomNum = nums.random()
+    val randomNum = remember{nums.random()}
 
     var numberString by remember { mutableStateOf("") }
     var number by remember { mutableStateOf(0) }
