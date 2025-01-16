@@ -24,6 +24,7 @@ import m78exercices.composeapp.generated.resources.dice_4
 import m78exercices.composeapp.generated.resources.dice_5
 import m78exercices.composeapp.generated.resources.dice_6
 import m78exercices.composeapp.generated.resources.dicerollericon
+import m78exercices.composeapp.generated.resources.tapestry
 import m78exercices.composeapp.generated.resources.title
 import org.jetbrains.compose.resources.painterResource
 import kotlin.random.Random
@@ -35,6 +36,18 @@ fun diceRoller(){
     val firstRandomNum = mutableStateOf(Random.nextInt(1, 7))
     val secondRandomNum = mutableStateOf(Random.nextInt(1, 7))
     var ran = Random.nextInt(1, 7)
+
+    // Imatge de fons
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Background image
+        Image(
+            painter = painterResource(Res.drawable.tapestry),
+            modifier = Modifier.fillMaxSize(),
+            contentDescription = null
+        )
+    }
 
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
         Image(
