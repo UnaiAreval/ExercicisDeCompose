@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import m78exercices.composeapp.generated.resources.Res
@@ -43,7 +44,8 @@ fun diceRoller(){
         Image(
             painter = painterResource(Res.drawable.tapestry),
             modifier = Modifier.fillMaxSize(),
-            contentDescription = null
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
         )
     }
 

@@ -26,107 +26,106 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun Counter(){
+
     val scoreOne = remember { mutableStateOf(0) }
     val scoreTwo = remember { mutableStateOf(0) }
 
-    Row {
-        Row {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(20.dp)
-            ) {
-                Column ( horizontalAlignment = Alignment.CenterHorizontally ) {
-                    if (scoreTwo.value > scoreOne.value){
+    Row (modifier = Modifier.fillMaxSize()){
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Column ( horizontalAlignment = Alignment.CenterHorizontally ) {
+                if (scoreTwo.value > scoreOne.value){
+                    Image(
+                        painter = painterResource(Res.drawable.papelera),
+                        modifier = Modifier.size(100.dp),
+                        contentDescription = null
+                    )
+                } else {
+                    if (scoreTwo.value < scoreOne.value){
                         Image(
-                            painter = painterResource(Res.drawable.papelera),
+                            painter = painterResource(Res.drawable.corona),
                             modifier = Modifier.size(100.dp),
                             contentDescription = null
                         )
-                    } else {
-                        if (scoreTwo.value < scoreOne.value){
-                            Image(
-                                painter = painterResource(Res.drawable.corona),
-                                modifier = Modifier.size(100.dp),
-                                contentDescription = null
-                            )
-                        } else{
-                            Image(
-                                painter = painterResource(Res.drawable.puntosSuspensivos),
-                                modifier = Modifier.size(100.dp),
-                                contentDescription = null
-                            )
-                        }
+                    } else{
+                        Image(
+                            painter = painterResource(Res.drawable.puntosSuspensivos),
+                            modifier = Modifier.size(100.dp),
+                            contentDescription = null
+                        )
                     }
-
-                    Text(
-                        "" + scoreOne.value,
-                        fontSize = 2.em,
-                        modifier = Modifier.background(color = Color.LightGray).padding(10.dp)
-                    )
                 }
 
-                Row {
-                    Button(onClick = {
-                        scoreOne.value++
-                    }) {
-                        Text("Score Up")
+                Text(
+                    "" + scoreOne.value,
+                    fontSize = 2.em,
+                    modifier = Modifier.background(color = Color.LightGray).padding(10.dp)
+                )
+            }
+
+            Row {
+                Button(onClick = {
+                    scoreOne.value++
+                }) {
+                    Text("Score Up")
+                }
+                Button(onClick = {
+                    if (scoreOne.value > 0){
+                        scoreOne.value--
                     }
-                    Button(onClick = {
-                        if (scoreOne.value > 0){
-                            scoreOne.value--
-                        }
-                    }) {
-                        Text("Score Down")
-                    }
+                }) {
+                    Text("Score Down")
                 }
             }
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(20.dp)
-            ) {
-                Column ( horizontalAlignment = Alignment.CenterHorizontally ) {
-                    if (scoreTwo.value < scoreOne.value) {
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Column ( horizontalAlignment = Alignment.CenterHorizontally ) {
+                if (scoreTwo.value < scoreOne.value) {
+                    Image(
+                        painter = painterResource(Res.drawable.papelera),
+                        modifier = Modifier.size(100.dp),
+                        contentDescription = null
+                    )
+                } else {
+                    if (scoreTwo.value > scoreOne.value){
                         Image(
-                            painter = painterResource(Res.drawable.papelera),
+                            painter = painterResource(Res.drawable.corona),
                             modifier = Modifier.size(100.dp),
                             contentDescription = null
                         )
-                    } else {
-                        if (scoreTwo.value > scoreOne.value){
-                            Image(
-                                painter = painterResource(Res.drawable.corona),
-                                modifier = Modifier.size(100.dp),
-                                contentDescription = null
-                            )
-                        } else{
-                            Image(
-                                painter = painterResource(Res.drawable.puntosSuspensivos),
-                                modifier = Modifier.size(100.dp),
-                                contentDescription = null
-                            )
-                        }
+                    } else{
+                        Image(
+                            painter = painterResource(Res.drawable.puntosSuspensivos),
+                            modifier = Modifier.size(100.dp),
+                            contentDescription = null
+                        )
                     }
-
-                    Text(
-                        "" + scoreTwo.value,
-                        fontSize = 2.em,
-                        modifier = Modifier.background(color = Color.LightGray).padding(10.dp)
-                    )
                 }
 
-                Row {
-                    Button(onClick = {
-                        scoreTwo.value++
-                    }) {
-                        Text("Score Up")
+                Text(
+                    "" + scoreTwo.value,
+                    fontSize = 2.em,
+                    modifier = Modifier.background(color = Color.LightGray).padding(10.dp)
+                )
+            }
+
+            Row {
+                Button(onClick = {
+                    scoreTwo.value++
+                }) {
+                    Text("Score Up")
+                }
+                Button(onClick = {
+                    if (scoreTwo.value > 0) {
+                        scoreTwo.value--
                     }
-                    Button(onClick = {
-                        if (scoreTwo.value > 0) {
-                            scoreTwo.value--
-                        }
-                    }) {
-                        Text("Score Down")
-                    }
+                }) {
+                    Text("Score Down")
                 }
             }
         }
