@@ -32,10 +32,8 @@ import kotlin.random.Random
 @Composable
 fun diceRoller(){
 
-    val nums = 1..6
     val firstRandomNum = mutableStateOf(Random.nextInt(1, 7))
     val secondRandomNum = mutableStateOf(Random.nextInt(1, 7))
-    var ran = Random.nextInt(1, 7)
 
     // Imatge de fons
     Box(

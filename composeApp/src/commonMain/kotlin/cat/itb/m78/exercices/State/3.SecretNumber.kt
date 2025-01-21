@@ -15,7 +15,7 @@ fun secretNum() {
     var text = remember { mutableStateOf("") }
     val nums = 0..100
     val randomNum = remember{nums.random()}
-    var bucleTimes = remember{ mutableStateOf(0)}
+    val bucleTimes = remember{ mutableStateOf(0)}
 
     var numberString by remember { mutableStateOf("") }
     var number by remember { mutableStateOf(0) }
