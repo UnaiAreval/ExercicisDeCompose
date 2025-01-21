@@ -122,9 +122,6 @@ fun diceRoller(){
         }){
             Text("ROLL THE DICE");
         }
-        Row{
-
-        }
     }
 }
 @Composable

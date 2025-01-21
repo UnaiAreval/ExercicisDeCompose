@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import m78exercices.composeapp.generated.resources.Res
 import m78exercices.composeapp.generated.resources.corona
 import m78exercices.composeapp.generated.resources.papelera
@@ -25,7 +27,7 @@ import m78exercices.composeapp.generated.resources.puntosSuspensivos
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun Counter(){
+fun CounterWhithoutViewModel(){
 
     val scoreOne = remember { mutableStateOf(0) }
     val scoreTwo = remember { mutableStateOf(0) }
@@ -127,6 +129,41 @@ fun Counter(){
                 }) {
                     Text("Score Down")
                 }
+            }
+        }
+    }
+}
+
+class CounterViewModel : ViewModel(){
+    val counter1 = mutableStateOf(0)
+    val counter2 = mutableStateOf(0)
+
+    fun increaseCounter1(){
+        counter1.value++
+    }
+
+    fun increaseCounter2(){
+        counter2.value++
+    }
+}
+@Composable
+fun CounterScreen(){
+    val viewModel = viewModel{ CounterViewModel() }
+
+    Row {
+        Column {
+            Text( viewModel.counter1.value.toString() )
+            Button(onClick = {
+                viewModel.increaseCounter1()
+            }){
+                Text("Score Up")
+            }
+        }
+
+        Column {
+            Text( viewModel.counter2.value.toString() )
+            Button(onClick = { viewModel.increaseCounter2() }){
+                Text("Score Up")
             }
         }
     }
