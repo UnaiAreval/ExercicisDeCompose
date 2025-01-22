@@ -2,7 +2,7 @@ package cat.itb.m78.exercices.ViewModel
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 data class Product (val name: String, val amount: Int)
+
 
 @Composable
 fun shoppingList(){
@@ -32,6 +33,11 @@ fun shoppingList(){
             label = { Text(text = "Amount") },
             onValueChange = { amount = it }
         )
+        Button(onClick = {
+
+        }){
+            Text("Add Item")
+        }
     }
 
 }
