@@ -12,14 +12,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
 
 data class Product (val name: String, val amount: Int)
+class ShopListViewModel : ViewModel(){
+    val name = mutableStateOf("")
+    val amount = mutableStateOf(0)
+}
 
 
 @Composable
 fun shoppingList(){
     var name by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf("") }
+    var amount by remember { mutableStateOf(0) }
+    val list = mutableListOf( listOf(Product(name, amount)) )
 
     Column (modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -29,12 +35,11 @@ fun shoppingList(){
             onValueChange = { name = it }
         )
         TextField(
-            value = amount,
+            value = amount.toString(),
             label = { Text(text = "Amount") },
-            onValueChange = { amount = it }
+            onValueChange = { amount = it.toInt() }
         )
         Button(onClick = {
-
         }){
             Text("Add Item")
         }
