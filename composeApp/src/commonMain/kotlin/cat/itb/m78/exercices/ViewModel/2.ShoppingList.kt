@@ -6,43 +6,61 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
-data class Product (val name: String, val amount: Int)
-class ShopListViewModel : ViewModel(){
+class ShopListViewModel(value: String, value1: Int) : ViewModel(){
     val name = mutableStateOf("")
     val amount = mutableStateOf(0)
+
+    fun funNewName(newName: String){
+        name.value = newName
+    }
+    fun funNewAmount(newAmount: Int){
+        amount.value = newAmount
+    }
 }
 
 
 @Composable
 fun shoppingList(){
-    var name by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf(0) }
-    val list = mutableListOf( listOf(Product(name, amount)) )
+    val viewModel = viewModel{ ShopListViewModel("", 0) }
+    var addItem = false
+    val shopList : MutableList<ShopListViewModel> = mutableListOf()
 
     Column (modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
         TextField(
-            value = name,
+            value = viewModel.name.value,
             label = { Text(text = "Product") },
-            onValueChange = { name = it }
+            onValueChange = { viewModel.name.value = it }
         )
         TextField(
-            value = amount.toString(),
+            value = viewModel.amount.value.toString(),
             label = { Text(text = "Amount") },
-            onValueChange = { amount = it.toInt() }
+            onValueChange = { viewModel.amount.value = it.toInt() }
         )
         Button(onClick = {
+            if(viewModel.name.value != ""){ addItem = true }
+
+            for (i in 0..100){
+                if (viewModel.amount.value != i){ addItem = false }
+            }
+            if (addItem){
+                viewModel.funNewName(viewModel.name.value)
+                viewModel.funNewAmount(viewModel.amount.value)
+                shopList.add(ShopListViewModel(viewModel.name.value, viewModel.amount.value))
+            }
+
         }){
             Text("Add Item")
         }
-    }
 
+        for (i in 0..shopList.size){
+            Text("Producte: ${shopList[i].name} Quantitat: ${shopList[i].amount}")
+        }
+    }
 }

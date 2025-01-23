@@ -11,6 +11,7 @@ import cat.itb.m78.exercices.Stateless.ContactApp
 import cat.itb.m78.exercices.Stateless.Resource
 import cat.itb.m78.exercices.Stateless.Welcome
 import cat.itb.m78.exercices.ViewModel.CounterScreen
+import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
 import cat.itb.m78.exercices.ViewModel.shoppingList
 //Final d'els exercicis
 import cat.itb.m78.exercices.theme.AppTheme
