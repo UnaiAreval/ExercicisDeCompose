@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
@@ -28,7 +29,6 @@ class ShopListViewModel(value: String, value1: Int) : ViewModel(){
 @Composable
 fun shoppingList(){
     val viewModel = viewModel{ ShopListViewModel("", 0) }
-    var addItem = false
     val shopList : MutableList<ShopListViewModel> = mutableListOf()
 
     Column (modifier = Modifier.fillMaxSize(),
@@ -36,31 +36,25 @@ fun shoppingList(){
         TextField(
             value = viewModel.name.value,
             label = { Text(text = "Product") },
-            onValueChange = { viewModel.name.value = it }
+            onValueChange = { viewModel.funNewName(it) }
         )
         TextField(
             value = viewModel.amount.value.toString(),
             label = { Text(text = "Amount") },
-            onValueChange = { viewModel.amount.value = it.toInt() }
+            onValueChange = { viewModel.funNewAmount(it.toInt()) }
         )
         Button(onClick = {
-            if(viewModel.name.value != ""){ addItem = true }
-
-            for (i in 0..100){
-                if (viewModel.amount.value != i){ addItem = false }
-            }
-            if (addItem){
-                viewModel.funNewName(viewModel.name.value)
-                viewModel.funNewAmount(viewModel.amount.value)
-                shopList.add(ShopListViewModel(viewModel.name.value, viewModel.amount.value))
-            }
+            shopList.add(ShopListViewModel(viewModel.name.value, viewModel.amount.value))
 
         }){
             Text("Add Item")
         }
-
-        for (i in 0..shopList.size){
-            Text("Producte: ${shopList[i].name} Quantitat: ${shopList[i].amount}")
+        if (shopList.size > 0){
+            for (i in 0..shopList.size){
+                Text("Producte: ${shopList[i].name} Quantitat: ${shopList[i].amount}")
+            }
+        } else{
+            Text("Llista buida")
         }
     }
 }
