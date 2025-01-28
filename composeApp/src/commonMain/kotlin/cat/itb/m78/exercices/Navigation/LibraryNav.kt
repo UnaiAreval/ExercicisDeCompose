@@ -12,6 +12,34 @@ import cat.itb.m78.exercices.Stateless.ContactApp
 import cat.itb.m78.exercices.Stateless.Resource
 import cat.itb.m78.exercices.Stateless.Welcome
 import cat.itb.m78.exercices.Stateless.helloWorld
+import cat.itb.m78.exercices.ViewModel.CounterWithViewModel
+
+@Composable
+fun ExercisesLibraryScreen(){
+    Button(onClick = {
+
+    }){
+        Text("")
+    }
+
+    Button(onClick = {
+
+    }){
+        Text("")
+    }
+
+    Button(onClick = {
+
+    }){
+        Text("")
+    }
+
+    Button(onClick = {
+
+    }){
+        Text("")
+    }
+}
 
 //Stateless Exercises Screens
 @Composable
@@ -133,6 +161,14 @@ fun ViewModelScreen(){
         }
     }
 }
+@Composable
+fun CounterScreen(){
+    CounterWithViewModel()
+}
+@Composable
+fun ShoppingListScreen(){
+
+}
 
 //Navigation Exercises Screens
 @Composable
@@ -150,4 +186,8 @@ fun NavigationScreen(){
             Text("LibraryNav")
         }
     }
+}
+@Composable
+fun ManualNavScreen(){
+    ManualNav()
 }

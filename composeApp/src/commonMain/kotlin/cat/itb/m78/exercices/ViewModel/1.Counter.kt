@@ -147,7 +147,7 @@ class CounterViewModel : ViewModel(){
     }
 }
 @Composable
-fun CounterScreen(){
+fun CounterWithViewModel(){
     val viewModel = viewModel{ CounterViewModel() }
 
     Row {
