@@ -13,10 +13,11 @@ import cat.itb.m78.exercices.Stateless.Welcome
 import cat.itb.m78.exercices.ViewModel.CounterScreen
 import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
 import cat.itb.m78.exercices.ViewModel.shoppingList
-//Final d'els exercicis
+import cat.itb.m78.exercices.Navigation.MainManualNav
+// Final d'els exercicis
 import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    shoppingList()
+
 }
