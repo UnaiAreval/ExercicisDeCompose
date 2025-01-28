@@ -77,12 +77,12 @@ fun Screen1(navigateToMainManualNav: ()-> Unit){
     Column (modifier = Modifier.background(color = Color.Green).fillMaxSize(),
         horizontalAlignment = Alignment.End,
         verticalArrangement = Arrangement.Bottom){
-
-        Text("Screen 1")
-        Button(onClick = navigateToMainManualNav){
-            Text("Back to main menu")
+        Column (horizontalAlignment = Alignment.CenterHorizontally){
+            Text("Screen 1")
+            Button(onClick = navigateToMainManualNav){
+                Text("Back to main menu")
+            }
         }
-
     }
 }
 @Composable

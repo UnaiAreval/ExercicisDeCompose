@@ -13,7 +13,6 @@ import cat.itb.m78.exercices.Stateless.Resource
 import cat.itb.m78.exercices.Stateless.Welcome
 import cat.itb.m78.exercices.ViewModel.CounterScreen
 import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
-import cat.itb.m78.exercices.ViewModel.shoppingList
 import cat.itb.m78.exercices.Navigation.ManualNav
 // Final d'els exercicis
 
