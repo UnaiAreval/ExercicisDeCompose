@@ -3,6 +3,8 @@ package cat.itb.m78.exercices.ViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -13,48 +15,49 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-class ShopListViewModel(value: String, value1: Int) : ViewModel(){
-    val name = mutableStateOf("")
-    val amount = mutableStateOf(0)
+data class Product(val name: String, val amount: Int)
 
-    fun funNewName(newName: String){
+class ShopingListViewModel(name: String, amount: String) : ViewModel(){
+    val name = mutableStateOf("")
+    val amount = mutableStateOf("")
+    val proucts = mutableStateOf(listOf<Product>())
+
+    fun changeName(newName: String){
         name.value = newName
     }
-    fun funNewAmount(newAmount: Int){
+    fun changeAmount(newAmount: String){
         amount.value = newAmount
+    }
+    fun addProduct(){
+        if (amount.value.toIntOrNull()==null) return
+        val newProduct = Product(name.value, amount.value.toInt())
+        val newList = proucts.value+newProduct
+        proucts.value = newList
+        name.value = ""
+        amount.value = ""
     }
 }
 
+@Composable
+fun ShopListScreen(){
+
+}
 
 @Composable
-fun shoppingList(){
-    val viewModel = viewModel{ ShopListViewModel("", 0) }
-    val shopList : MutableList<ShopListViewModel> = mutableListOf()
+fun shoppingList(
+    name: String,
+    amount: String,
+    product: Product,
+    onNameChanged: (String)->Unit,
+    onAmountChanged: (String)->Unit
+){
+    Column {
+        Card{
+            Column {
+                OutlinedTextField(name, onNameChanged,
+                    label = {Text("Name")})
 
-    Column (modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        TextField(
-            value = viewModel.name.value,
-            label = { Text(text = "Product") },
-            onValueChange = { viewModel.funNewName(it) }
-        )
-        TextField(
-            value = viewModel.amount.value.toString(),
-            label = { Text(text = "Amount") },
-            onValueChange = { viewModel.funNewAmount(it.toInt()) }
-        )
-        Button(onClick = {
-            shopList.add(ShopListViewModel(viewModel.name.value, viewModel.amount.value))
-
-        }){
-            Text("Add Item")
-        }
-        if (shopList.size > 0){
-            for (i in 0..shopList.size){
-                Text("Producte: ${shopList[i].name} Quantitat: ${shopList[i].amount}")
             }
-        } else{
-            Text("Llista buida")
         }
     }
 }
