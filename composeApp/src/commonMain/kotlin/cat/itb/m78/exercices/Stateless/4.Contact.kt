@@ -28,7 +28,7 @@ data class Contact(val fullName: String, val email: String, val phone: String)
 val contact = Contact("Marta Casserres", "marta@example.com", "934578484")
 
 @Composable
-fun ContactApp(){
+fun Contact(){
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()){
         Image(
             painter = painterResource(Res.drawable.generatedFace),
