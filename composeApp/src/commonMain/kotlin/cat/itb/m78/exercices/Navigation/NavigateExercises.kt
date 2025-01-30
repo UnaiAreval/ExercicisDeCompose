@@ -15,6 +15,8 @@ import cat.itb.m78.exercices.Stateless.Contact
 import cat.itb.m78.exercices.Stateless.HelloWorld
 import cat.itb.m78.exercices.Stateless.Resource
 import cat.itb.m78.exercices.Stateless.Welcome
+import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
+import cat.itb.m78.exercices.ViewModel.CounterWithViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -27,6 +29,11 @@ fun NavExercisesScreenSample() {
                 navigateToStateScreen = { navController.navigate(Destination.State) },
                 navigateToViewModelScreen = { navController.navigate(Destination.ViewModel) },
                 navigateToNavigationScreen = { navController.navigate(Destination.Navigation) }
+            )
+        }
+        composable<Destination.NonFinished> {
+            NonFinished(
+                navigateToMainMenu = { navController.navigate(Destination.Library) }
             )
         }
         composable<Destination.Stateless> {
@@ -42,7 +49,7 @@ fun NavExercisesScreenSample() {
         composable<Destination.Welcome> { Welcome() }
         composable<Destination.Resource> { Resource() }
         composable<Destination.Contact> { Contact() }
-        composable<Destination.MessagesList> {  }
+        composable<Destination.MessagesList> { NonFinished( navigateToMainMenu = { navController.navigate(Destination.Library) } ) }
 
         composable<Destination.State> {
             StateScreen(
@@ -60,17 +67,31 @@ fun NavExercisesScreenSample() {
         composable<Destination.ViewModel> {
             ViewModelScreen(
                 navigateToCounter = { navController.navigate(Destination.Counter) },
+                navigateToCounterNoViewModel = { navController.navigate(Destination.CountNoViewModel) },
                 navigateToShopingList = { navController.navigate(Destination.ShopList) }
             )
         }
-        composable<Destination.Counter> {  }
-        composable<Destination.ShopList> {  }
+        composable<Destination.Counter> { CounterWithViewModel() }
+        composable<Destination.CountNoViewModel> { CounterWhithoutViewModel() }
+        composable<Destination.ShopList> { NonFinished(navigateToMainMenu = { navController.navigate(Destination.Library) }) }
+
+        composable<Destination.Navigation> {
+            NavigationScreen(
+                navigateToManualNav = { navController.navigate(Destination.ManualNav) },
+                navigateToLibraryNav = { navController.navigate(Destination.LibraryNav) }
+            )
+        }
+        composable<Destination.ManualNav> { ManualNav() }
+        composable<Destination.LibraryNav> { NonFinished(navigateToMainMenu = { navController.navigate(Destination.Library) }) }
     }
 }
 
 object Destination {
     @Serializable
     data object Library
+    @Serializable
+    data object NonFinished
+
     // Stateless Exercises
     @Serializable
     data object Stateless
@@ -103,11 +124,17 @@ object Destination {
     @Serializable
     data object Counter
     @Serializable
+    data object CountNoViewModel
+    @Serializable
     data object ShopList
 
     // Navigation Exercises
     @Serializable
     data object Navigation
+    @Serializable
+    data object ManualNav
+    @Serializable
+    data object LibraryNav
 }
 
 @Composable
@@ -196,11 +223,16 @@ fun StateScreen(navigateToGoodMorningNight:()-> Unit,
 //View Model Exercises Screens
 @Composable
 fun ViewModelScreen(navigateToCounter:()-> Unit,
+                    navigateToCounterNoViewModel:()-> Unit,
                     navigateToShopingList:()-> Unit){
 
     Column {
         Button(onClick = { navigateToCounter() }){
             Text("Counter")
+        }
+
+        Button(onClick = { navigateToCounterNoViewModel() }){
+            Text("Counter però mal fet")
         }
 
         Button(onClick = { navigateToShopingList() }){
@@ -211,18 +243,28 @@ fun ViewModelScreen(navigateToCounter:()-> Unit,
 
 //Navigation Exercises Screens
 @Composable
-fun NavigationScreen(){
-    Column {
-        Button(onClick = {
+fun NavigationScreen(navigateToManualNav:()-> Unit,
+                     navigateToLibraryNav:()-> Unit){
 
-        }){
+    Column {
+        Button(onClick = { navigateToManualNav() }){
             Text("ManualNav")
         }
 
-        Button(onClick = {
-
-        }){
+        Button(onClick = { navigateToLibraryNav() }){
             Text("LibraryNav")
+        }
+    }
+}
+
+// Pendents
+@Composable
+fun NonFinished(navigateToMainMenu:()-> Unit){
+    Column {
+        Text("Aquest exercici no esta acabat")
+
+        Button(onClick = { navigateToMainMenu() }){
+            Text("Tornar al menu principal")
         }
     }
 }
