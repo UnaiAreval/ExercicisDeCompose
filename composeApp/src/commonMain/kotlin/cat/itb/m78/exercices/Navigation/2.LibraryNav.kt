@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
-object Destination{
+object LibraryDestination{
     @Serializable
     data object MainScreen
     @Serializable
@@ -21,28 +21,28 @@ object Destination{
 @Composable
 fun LibraryNavSample(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Destination.MainScreen){
-        composable<Destination.MainScreen> {
+    NavHost(navController = navController, startDestination = LibraryDestination.MainScreen){
+        composable<LibraryDestination.MainScreen> {
             MainScreen(
-                navigateToScreen1 = { navController.navigate(Destination.FirstScreen) },
-                navigateToScreen2 = { navController.navigate(Destination.SecondScreen) },
-                navigateToScreen3 = { navController.navigate(Destination.ThirdScreen(it)) }
+                navigateToScreen1 = { navController.navigate(LibraryDestination.FirstScreen) },
+                navigateToScreen2 = { navController.navigate(LibraryDestination.SecondScreen) },
+                navigateToScreen3 = { navController.navigate(LibraryDestination.ThirdScreen(it)) }
             )
         }
-        composable<Destination.FirstScreen> {
+        composable<LibraryDestination.FirstScreen> {
             Screen1 (
-                navigateToMainManualNav = { navController.navigate(Destination.MainScreen) }
+                navigateToMainManualNav = { navController.navigate(LibraryDestination.MainScreen) }
             )
         }
-        composable<Destination.SecondScreen> {
+        composable<LibraryDestination.SecondScreen> {
             Screen2 (
-                navigateToMainManualNav = { navController.navigate(Destination.MainScreen) }
+                navigateToMainManualNav = { navController.navigate(LibraryDestination.MainScreen) }
             )
         }
-        composable<Destination.ThirdScreen> { backStack ->
-            val message = backStack.toRoute<Destination.ThirdScreen>().message
+        composable<LibraryDestination.ThirdScreen> { backStack ->
+            val message = backStack.toRoute<LibraryDestination.ThirdScreen>().message
             Screen3(message,
-                navigateToMainManualNav = { navController.navigate(Destination.MainScreen) })
+                navigateToMainManualNav = { navController.navigate(LibraryDestination.MainScreen) })
         }
     }
 }

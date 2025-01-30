@@ -2,7 +2,7 @@ package cat.itb.m78.exercices
 
 import androidx.compose.runtime.*
 
-// Exercicis
+/* Exercicis
 import cat.itb.m78.exercices.State.GoodTime
 import cat.itb.m78.exercices.State.SayHello
 import cat.itb.m78.exercices.State.DiceRoller
@@ -14,14 +14,15 @@ import cat.itb.m78.exercices.ViewModel.CounterWithViewModel
 import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
 import cat.itb.m78.exercices.Navigation.ManualNav
 import cat.itb.m78.exercices.Navigation.LibraryNavSample
-// Final d'els exercicis
+ Final d'els exercicis*/
 
 //Llibreria amb tots els exercicis
 import cat.itb.m78.exercices.Navigation.NavExercisesScreenSample
+import cat.itb.m78.exercices.Navigation.TicTacToeSample
 
 import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    NavExercisesScreenSample()
+    TicTacToeSample()
 }
