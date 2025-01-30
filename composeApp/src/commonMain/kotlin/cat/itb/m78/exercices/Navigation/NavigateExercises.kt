@@ -7,6 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cat.itb.m78.exercices.State.DiceRoller
+import cat.itb.m78.exercices.State.GoodTime
+import cat.itb.m78.exercices.State.SayHello
+import cat.itb.m78.exercices.State.SecretNum
 import cat.itb.m78.exercices.Stateless.Contact
 import cat.itb.m78.exercices.Stateless.HelloWorld
 import cat.itb.m78.exercices.Stateless.Resource
@@ -39,6 +43,28 @@ fun NavExercisesScreenSample() {
         composable<Destination.Resource> { Resource() }
         composable<Destination.Contact> { Contact() }
         composable<Destination.MessagesList> {  }
+
+        composable<Destination.State> {
+            StateScreen(
+                navigateToGoodMorningNight = { navController.navigate(Destination.GoodMorningNight) },
+                navigateToSayHello = { navController.navigate(Destination.SayHello) },
+                navigateToSecretNumber = { navController.navigate(Destination.SecretNum) },
+                navigateToDiceRoller = { navController.navigate(Destination.DiceRoller) }
+            )
+        }
+        composable<Destination.GoodMorningNight> { GoodTime() }
+        composable<Destination.SayHello> { SayHello() }
+        composable<Destination.SecretNum> { SecretNum() }
+        composable<Destination.DiceRoller> { DiceRoller() }
+
+        composable<Destination.ViewModel> {
+            ViewModelScreen(
+                navigateToCounter = { navController.navigate(Destination.Counter) },
+                navigateToShopingList = { navController.navigate(Destination.ShopList) }
+            )
+        }
+        composable<Destination.Counter> {  }
+        composable<Destination.ShopList> {  }
     }
 }
 
@@ -63,7 +89,23 @@ object Destination {
     @Serializable
     data object State
     @Serializable
+    data object GoodMorningNight
+    @Serializable
+    data object SayHello
+    @Serializable
+    data object SecretNum
+    @Serializable
+    data object DiceRoller
+
+    // ViewModel Exercises
+    @Serializable
     data object ViewModel
+    @Serializable
+    data object Counter
+    @Serializable
+    data object ShopList
+
+    // Navigation Exercises
     @Serializable
     data object Navigation
 }
@@ -127,29 +169,25 @@ fun StatelessScreen(navigateToHelloWorld:()-> Unit,
 
 //State Exercises Screens
 @Composable
-fun StateScreen(){
-    Column {
-        Button(onClick = {
+fun StateScreen(navigateToGoodMorningNight:()-> Unit,
+                navigateToSayHello:()-> Unit,
+                navigateToSecretNumber:()-> Unit,
+                navigateToDiceRoller:()-> Unit){
 
-        }){
+    Column {
+        Button(onClick = { navigateToGoodMorningNight() }){
             Text("GoodMorningAndNight")
         }
 
-        Button(onClick = {
-
-        }){
+        Button(onClick = { navigateToSayHello() }){
             Text("SayHelloScreen")
         }
 
-        Button(onClick = {
-
-        }){
+        Button(onClick = { navigateToSecretNumber() }){
             Text("SecretNumber")
         }
 
-        Button(onClick = {
-
-        }){
+        Button(onClick = { navigateToDiceRoller() }){
             Text("DiceRoller")
         }
     }
@@ -157,17 +195,15 @@ fun StateScreen(){
 
 //View Model Exercises Screens
 @Composable
-fun ViewModelScreen(){
-    Column {
-        Button(onClick = {
+fun ViewModelScreen(navigateToCounter:()-> Unit,
+                    navigateToShopingList:()-> Unit){
 
-        }){
+    Column {
+        Button(onClick = { navigateToCounter() }){
             Text("Counter")
         }
 
-        Button(onClick = {
-
-        }){
+        Button(onClick = { navigateToShopingList() }){
             Text("ShoppingList")
         }
     }

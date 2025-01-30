@@ -31,7 +31,7 @@ import org.jetbrains.compose.resources.painterResource
 import kotlin.random.Random
 
 @Composable
-fun diceRoller(){
+fun DiceRoller(){
 
     val firstRandomNum = mutableStateOf(Random.nextInt(1, 7))
     val secondRandomNum = mutableStateOf(Random.nextInt(1, 7))

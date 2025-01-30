@@ -50,7 +50,10 @@ private class ManualNavAppViewModel : ViewModel() {
 }
 
 @Composable
-fun MainScreen(navigateToScreen1: ()-> Unit, navigateToScreen2: ()-> Unit, navigateToScreen3: (String)-> Unit){
+fun MainScreen(navigateToScreen1: ()-> Unit,
+               navigateToScreen2: ()-> Unit,
+               navigateToScreen3: (String)-> Unit){
+
     Column (modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
 

@@ -11,8 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 @Composable
-fun secretNum() {
-    var text = remember { mutableStateOf("") }
+fun SecretNum() {
+    val text = remember { mutableStateOf("") }
     val nums = 0..100
     val randomNum = remember{nums.random()}
     val bucleTimes = remember{ mutableStateOf(0)}

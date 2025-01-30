@@ -5,8 +5,8 @@ import androidx.compose.runtime.*
 // Exercicis
 import cat.itb.m78.exercices.State.GoodTime
 import cat.itb.m78.exercices.State.SayHello
-import cat.itb.m78.exercices.State.diceRoller
-import cat.itb.m78.exercices.State.secretNum
+import cat.itb.m78.exercices.State.DiceRoller
+import cat.itb.m78.exercices.State.SecretNum
 import cat.itb.m78.exercices.Stateless.Contact
 import cat.itb.m78.exercices.Stateless.Resource
 import cat.itb.m78.exercices.Stateless.Welcome
