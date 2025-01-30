@@ -78,11 +78,13 @@ fun NavExercisesScreenSample() {
         composable<ExerciseDestination.Navigation> {
             NavigationScreen(
                 navigateToManualNav = { navController.navigate(ExerciseDestination.ManualNav) },
-                navigateToLibraryNav = { navController.navigate(ExerciseDestination.LibraryNav) }
+                navigateToLibraryNav = { navController.navigate(ExerciseDestination.LibraryNav) },
+                navigateToTicTacToeSample = { navController.navigate(ExerciseDestination.TicTacToe) }
             )
         }
         composable<ExerciseDestination.ManualNav> { ManualNav() }
         composable<ExerciseDestination.LibraryNav> { LibraryNavSample() }
+        composable<ExerciseDestination.TicTacToe> { TicTacToeSample() }
     }
 }
 
@@ -135,6 +137,8 @@ object ExerciseDestination {
     data object ManualNav
     @Serializable
     data object LibraryNav
+    @Serializable
+    data object TicTacToe
 }
 
 @Composable
@@ -244,7 +248,8 @@ fun ViewModelScreen(navigateToCounter:()-> Unit,
 //Navigation Exercises Screens
 @Composable
 fun NavigationScreen(navigateToManualNav:()-> Unit,
-                     navigateToLibraryNav:()-> Unit){
+                     navigateToLibraryNav:()-> Unit,
+                     navigateToTicTacToeSample:()-> Unit){
 
     Column {
         Button(onClick = { navigateToManualNav() }){
@@ -253,6 +258,10 @@ fun NavigationScreen(navigateToManualNav:()-> Unit,
 
         Button(onClick = { navigateToLibraryNav() }){
             Text("LibraryNav")
+        }
+
+        Button(onClick = { navigateToTicTacToeSample() }){
+            Text("TicTacToe")
         }
     }
 }
