@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.Navigation
+package cat.itb.m78.exercices.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -7,16 +7,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cat.itb.m78.exercices.State.DiceRoller
-import cat.itb.m78.exercices.State.GoodTime
-import cat.itb.m78.exercices.State.SayHello
-import cat.itb.m78.exercices.State.SecretNum
-import cat.itb.m78.exercices.Stateless.Contact
-import cat.itb.m78.exercices.Stateless.HelloWorld
-import cat.itb.m78.exercices.Stateless.Resource
-import cat.itb.m78.exercices.Stateless.Welcome
-import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
-import cat.itb.m78.exercices.ViewModel.CounterWithViewModel
+import cat.itb.m78.exercices.state.DiceRoller
+import cat.itb.m78.exercices.state.GoodTime
+import cat.itb.m78.exercices.state.SayHello
+import cat.itb.m78.exercices.state.SecretNum
+import cat.itb.m78.exercices.stateless.Contact
+import cat.itb.m78.exercices.stateless.HelloWorld
+import cat.itb.m78.exercices.stateless.Resource
+import cat.itb.m78.exercices.stateless.Welcome
+import cat.itb.m78.exercices.viewModel.CounterWhithoutViewModel
+import cat.itb.m78.exercices.viewModel.CounterWithViewModel
 import kotlinx.serialization.Serializable
 
 @Composable

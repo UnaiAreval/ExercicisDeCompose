@@ -17,12 +17,11 @@ import cat.itb.m78.exercices.Navigation.LibraryNavSample
  Final d'els exercicis*/
 
 //Llibreria amb tots els exercicis
-import cat.itb.m78.exercices.Navigation.NavExercisesScreenSample
-import cat.itb.m78.exercices.Navigation.TicTacToeSample
+import cat.itb.m78.exercices.navigation.NavExercisesScreenSample
 
 import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    TicTacToeSample()
+    NavExercisesScreenSample()
 }

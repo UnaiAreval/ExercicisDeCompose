@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.Stateless
+package cat.itb.m78.exercices.stateless
 
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.Image

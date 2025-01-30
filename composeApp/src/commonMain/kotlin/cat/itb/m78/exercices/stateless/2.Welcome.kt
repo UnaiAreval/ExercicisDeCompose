@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.Stateless
+package cat.itb.m78.exercices.stateless
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button

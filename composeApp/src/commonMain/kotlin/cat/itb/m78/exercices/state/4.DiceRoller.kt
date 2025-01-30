@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.State
+package cat.itb.m78.exercices.state
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -120,7 +120,7 @@ fun DiceRoller(){
         Button(onClick = {
             firstRandomNum.value = Random.nextInt(1, 7)
         }){
-            Text("ROLL THE DICE");
+            Text("ROLL THE DICE")
         }
     }
 }
