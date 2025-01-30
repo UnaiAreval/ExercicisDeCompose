@@ -13,6 +13,7 @@ import cat.itb.m78.exercices.Stateless.Welcome
 import cat.itb.m78.exercices.ViewModel.CounterWithViewModel
 import cat.itb.m78.exercices.ViewModel.CounterWhithoutViewModel
 import cat.itb.m78.exercices.Navigation.ManualNav
+import cat.itb.m78.exercices.Navigation.LibraryNavSample
 // Final d'els exercicis
 
 //Llibreria amb tots els exercicis
@@ -22,5 +23,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    NavExercisesScreenSample()
+    LibraryNavSample()
 }

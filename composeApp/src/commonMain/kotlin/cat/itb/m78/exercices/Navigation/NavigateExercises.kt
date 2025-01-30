@@ -22,71 +22,71 @@ import kotlinx.serialization.Serializable
 @Composable
 fun NavExercisesScreenSample() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Destination.Library) {
-        composable<Destination.Library> {
+    NavHost(navController = navController, startDestination = ExerciseDestination.Library) {
+        composable<ExerciseDestination.Library> {
             LibraryScreen(
-                navigateToStatelessScreen = { navController.navigate(Destination.Stateless) },
-                navigateToStateScreen = { navController.navigate(Destination.State) },
-                navigateToViewModelScreen = { navController.navigate(Destination.ViewModel) },
-                navigateToNavigationScreen = { navController.navigate(Destination.Navigation) }
+                navigateToStatelessScreen = { navController.navigate(ExerciseDestination.Stateless) },
+                navigateToStateScreen = { navController.navigate(ExerciseDestination.State) },
+                navigateToViewModelScreen = { navController.navigate(ExerciseDestination.ViewModel) },
+                navigateToNavigationScreen = { navController.navigate(ExerciseDestination.Navigation) }
             )
         }
-        composable<Destination.NonFinished> {
+        composable<ExerciseDestination.NonFinished> {
             NonFinished(
-                navigateToMainMenu = { navController.navigate(Destination.Library) }
+                navigateToMainMenu = { navController.navigate(ExerciseDestination.Library) }
             )
         }
-        composable<Destination.Stateless> {
+        composable<ExerciseDestination.Stateless> {
             StatelessScreen(
-                navigateToHelloWorld = { navController.navigate(Destination.HelloWorld) },
-                navigateToWelcome = { navController.navigate(Destination.Welcome) },
-                navigateToResource = { navController.navigate(Destination.Resource) },
-                navigateToContact = { navController.navigate(Destination.Contact) },
-                navigateToMessagesList = { navController.navigate(Destination.MessagesList) }
+                navigateToHelloWorld = { navController.navigate(ExerciseDestination.HelloWorld) },
+                navigateToWelcome = { navController.navigate(ExerciseDestination.Welcome) },
+                navigateToResource = { navController.navigate(ExerciseDestination.Resource) },
+                navigateToContact = { navController.navigate(ExerciseDestination.Contact) },
+                navigateToMessagesList = { navController.navigate(ExerciseDestination.MessagesList) }
             )
         }
-        composable<Destination.HelloWorld> { HelloWorld() }
-        composable<Destination.Welcome> { Welcome() }
-        composable<Destination.Resource> { Resource() }
-        composable<Destination.Contact> { Contact() }
-        composable<Destination.MessagesList> { NonFinished( navigateToMainMenu = { navController.navigate(Destination.Library) } ) }
+        composable<ExerciseDestination.HelloWorld> { HelloWorld() }
+        composable<ExerciseDestination.Welcome> { Welcome() }
+        composable<ExerciseDestination.Resource> { Resource() }
+        composable<ExerciseDestination.Contact> { Contact() }
+        composable<ExerciseDestination.MessagesList> { NonFinished( navigateToMainMenu = { navController.navigate(ExerciseDestination.Library) } ) }
 
-        composable<Destination.State> {
+        composable<ExerciseDestination.State> {
             StateScreen(
-                navigateToGoodMorningNight = { navController.navigate(Destination.GoodMorningNight) },
-                navigateToSayHello = { navController.navigate(Destination.SayHello) },
-                navigateToSecretNumber = { navController.navigate(Destination.SecretNum) },
-                navigateToDiceRoller = { navController.navigate(Destination.DiceRoller) }
+                navigateToGoodMorningNight = { navController.navigate(ExerciseDestination.GoodMorningNight) },
+                navigateToSayHello = { navController.navigate(ExerciseDestination.SayHello) },
+                navigateToSecretNumber = { navController.navigate(ExerciseDestination.SecretNum) },
+                navigateToDiceRoller = { navController.navigate(ExerciseDestination.DiceRoller) }
             )
         }
-        composable<Destination.GoodMorningNight> { GoodTime() }
-        composable<Destination.SayHello> { SayHello() }
-        composable<Destination.SecretNum> { SecretNum() }
-        composable<Destination.DiceRoller> { DiceRoller() }
+        composable<ExerciseDestination.GoodMorningNight> { GoodTime() }
+        composable<ExerciseDestination.SayHello> { SayHello() }
+        composable<ExerciseDestination.SecretNum> { SecretNum() }
+        composable<ExerciseDestination.DiceRoller> { DiceRoller() }
 
-        composable<Destination.ViewModel> {
+        composable<ExerciseDestination.ViewModel> {
             ViewModelScreen(
-                navigateToCounter = { navController.navigate(Destination.Counter) },
-                navigateToCounterNoViewModel = { navController.navigate(Destination.CountNoViewModel) },
-                navigateToShopingList = { navController.navigate(Destination.ShopList) }
+                navigateToCounter = { navController.navigate(ExerciseDestination.Counter) },
+                navigateToCounterNoViewModel = { navController.navigate(ExerciseDestination.CountNoViewModel) },
+                navigateToShopingList = { navController.navigate(ExerciseDestination.ShopList) }
             )
         }
-        composable<Destination.Counter> { CounterWithViewModel() }
-        composable<Destination.CountNoViewModel> { CounterWhithoutViewModel() }
-        composable<Destination.ShopList> { NonFinished(navigateToMainMenu = { navController.navigate(Destination.Library) }) }
+        composable<ExerciseDestination.Counter> { CounterWithViewModel() }
+        composable<ExerciseDestination.CountNoViewModel> { CounterWhithoutViewModel() }
+        composable<ExerciseDestination.ShopList> { NonFinished(navigateToMainMenu = { navController.navigate(ExerciseDestination.Library) }) }
 
-        composable<Destination.Navigation> {
+        composable<ExerciseDestination.Navigation> {
             NavigationScreen(
-                navigateToManualNav = { navController.navigate(Destination.ManualNav) },
-                navigateToLibraryNav = { navController.navigate(Destination.LibraryNav) }
+                navigateToManualNav = { navController.navigate(ExerciseDestination.ManualNav) },
+                navigateToLibraryNav = { navController.navigate(ExerciseDestination.LibraryNav) }
             )
         }
-        composable<Destination.ManualNav> { ManualNav() }
-        composable<Destination.LibraryNav> { NonFinished(navigateToMainMenu = { navController.navigate(Destination.Library) }) }
+        composable<ExerciseDestination.ManualNav> { ManualNav() }
+        composable<ExerciseDestination.LibraryNav> { LibraryNavSample() }
     }
 }
 
-object Destination {
+object ExerciseDestination {
     @Serializable
     data object Library
     @Serializable
