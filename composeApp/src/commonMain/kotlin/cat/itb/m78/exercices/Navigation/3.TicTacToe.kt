@@ -1,6 +1,5 @@
 package cat.itb.m78.exercices.Navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,11 +12,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 object TTTDestination{
@@ -71,7 +68,6 @@ fun StartScreen(navigateToPlay: () -> Unit){
 @Composable
 fun PlayScreen(navigateToWinner:()-> Unit){
     val someoneWin = remember{ mutableStateOf(false) }
-    val List = "a"
     //val boolList = List<List<Boolean?>>().toMutableMatrix()
 
     Row(modifier = Modifier.fillMaxSize(),
