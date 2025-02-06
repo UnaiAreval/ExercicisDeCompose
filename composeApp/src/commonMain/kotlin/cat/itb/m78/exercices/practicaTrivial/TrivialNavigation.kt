@@ -138,6 +138,16 @@ val questions = listOf(
         answer4 = "",
         clueItsYourAnswerCorrect = "",
         correctOne = 2
+    ),
+    MyQuestion(//Question 10
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 3
     )
 )
 //Me he complicado la vida
