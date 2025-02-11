@@ -168,6 +168,7 @@ private sealed interface Question {
     data class Question14(val points: Int) : Question
     data class Question15(val points: Int) : Question
     data class Result(val points: Int) : Question
+    data object ReturnToMain : Question
 }
 
 @Composable
@@ -346,7 +347,7 @@ fun QuestionNav(){
         )
         is Question.Question15 -> QuestionScreen(
             currentQuestion.points,
-            navigateToNextQuestion = { viewModel.navigateTo(Question.Question15(it)) },
+            navigateToNextQuestion = { viewModel.navigateTo(Question.Result(it)) },
             unit = "",
             askFor =  "",
             answer1 = "",
@@ -356,6 +357,10 @@ fun QuestionNav(){
             clueItsYourAnswerCorrect = "",
             correctOne = 4
         )
-        is Question.Result -> TODO()
+        is Question.Result -> ResultScreen(
+            navigateToTrivialMenu = { viewModel.navigateTo(Question.ReturnToMain) },
+            currentQuestion.points
+        )
+        is Question.ReturnToMain -> TrivialNavigateSample()
     }
 }
