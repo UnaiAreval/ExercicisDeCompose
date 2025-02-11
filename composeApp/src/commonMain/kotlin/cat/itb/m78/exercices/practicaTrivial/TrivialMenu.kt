@@ -29,7 +29,6 @@ fun TrivialMenu(
 ){
     val rounds = remember { mutableStateOf(5) }
     val difficulty = remember { mutableStateOf("") }
-    val points = 0
 
     Column (modifier = Modifier.fillMaxSize().background(Color.Blue),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,7 +39,7 @@ fun TrivialMenu(
             modifier = Modifier.size(150.dp).padding(15.dp).clip(CircleShape),
             contentDescription = null
         )
-        Button(onClick = { navigateToQuestions(points) })
+        Button(onClick = { navigateToQuestions(rounds.value) })
         { Text("Start Game") }
         Button(onClick = {
 

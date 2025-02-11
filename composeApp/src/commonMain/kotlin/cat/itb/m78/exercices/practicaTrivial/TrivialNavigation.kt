@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 object TrivialDestination{
@@ -15,7 +16,7 @@ object TrivialDestination{
     @Serializable
     data class SettingsScreen(val rounds: Int)
     @Serializable
-    data class QuestionsScreen(var points: Int)
+    data class QuestionsScreen(var rounds: Int)
 }
 
 @Composable
@@ -27,7 +28,9 @@ fun TrivialNavigateSample(){
         )
         }
         composable<TrivialDestination.SettingsScreen> { SettingsScreen () }
-        composable<TrivialDestination.QuestionsScreen>{ QuestionNav() }
+        composable<TrivialDestination.QuestionsScreen>{ backStack ->
+            val rounds = backStack.toRoute<TrivialDestination.QuestionsScreen>().rounds
+            QuestionNav(rounds) }
     }
 }
 
@@ -167,12 +170,12 @@ private sealed interface Question {
     data class Question13(val points: Int) : Question
     data class Question14(val points: Int) : Question
     data class Question15(val points: Int) : Question
-    data class Result(val points: Int) : Question
+    data class Result(val points: Int, val questionsDone: Int) : Question
     data object ReturnToMain : Question
 }
 
 @Composable
-fun QuestionNav(){
+fun QuestionNav( rounds: Int ){
     val viewModel = viewModel { ManualNavAppViewModel() }
     val currentQuestion = viewModel.currentQuestion.value
     when (currentQuestion) {
@@ -225,18 +228,33 @@ fun QuestionNav(){
             clueItsYourAnswerCorrect = "",
             correctOne = 2
         )
-        is Question.Question5 -> QuestionScreen(
-            currentQuestion.points,
-            navigateToNextQuestion = { viewModel.navigateTo(Question.Question6(it)) },
-            unit = "",
-            askFor =  "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
-            correctOne = 3
-        )
+        is Question.Question5 -> if (rounds == 5){
+            QuestionScreen(
+                currentQuestion.points,
+                navigateToNextQuestion = { viewModel.navigateTo(Question.Result(it, rounds)) },
+                unit = "",
+                askFor =  "",
+                answer1 = "",
+                answer2 = "",
+                answer3 = "",
+                answer4 = "",
+                clueItsYourAnswerCorrect = "",
+                correctOne = 3
+            )
+        } else{
+            QuestionScreen(
+                currentQuestion.points,
+                navigateToNextQuestion = { viewModel.navigateTo(Question.Question6(it)) },
+                unit = "",
+                askFor =  "",
+                answer1 = "",
+                answer2 = "",
+                answer3 = "",
+                answer4 = "",
+                clueItsYourAnswerCorrect = "",
+                correctOne = 3
+            )
+        }
         is Question.Question6 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question7(it)) },
@@ -285,18 +303,33 @@ fun QuestionNav(){
             clueItsYourAnswerCorrect = "",
             correctOne = 2
         )
-        is Question.Question10 -> QuestionScreen(
-            currentQuestion.points,
-            navigateToNextQuestion = { viewModel.navigateTo(Question.Question11(it)) },
-            unit = "",
-            askFor =  "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
-            correctOne = 3
-        )
+        is Question.Question10 -> if(rounds == 10){
+            QuestionScreen(
+                currentQuestion.points,
+                navigateToNextQuestion = { viewModel.navigateTo(Question.Result(it, rounds)) },
+                unit = "",
+                askFor =  "",
+                answer1 = "",
+                answer2 = "",
+                answer3 = "",
+                answer4 = "",
+                clueItsYourAnswerCorrect = "",
+                correctOne = 3
+            )
+        } else{
+            QuestionScreen(
+                currentQuestion.points,
+                navigateToNextQuestion = { viewModel.navigateTo(Question.Question11(it)) },
+                unit = "",
+                askFor =  "",
+                answer1 = "",
+                answer2 = "",
+                answer3 = "",
+                answer4 = "",
+                clueItsYourAnswerCorrect = "",
+                correctOne = 3
+            )
+        }
         is Question.Question11 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question12(it)) },
@@ -347,7 +380,7 @@ fun QuestionNav(){
         )
         is Question.Question15 -> QuestionScreen(
             currentQuestion.points,
-            navigateToNextQuestion = { viewModel.navigateTo(Question.Result(it)) },
+            navigateToNextQuestion = { viewModel.navigateTo(Question.Result(it, rounds)) },
             unit = "",
             askFor =  "",
             answer1 = "",
@@ -359,7 +392,8 @@ fun QuestionNav(){
         )
         is Question.Result -> ResultScreen(
             navigateToTrivialMenu = { viewModel.navigateTo(Question.ReturnToMain) },
-            currentQuestion.points
+            currentQuestion.points,
+            rounds
         )
         is Question.ReturnToMain -> TrivialNavigateSample()
     }
