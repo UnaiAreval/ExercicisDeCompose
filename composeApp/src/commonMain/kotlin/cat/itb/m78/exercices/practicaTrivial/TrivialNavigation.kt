@@ -12,9 +12,9 @@ import kotlinx.serialization.Serializable
 
 object TrivialDestination{
     @Serializable
-    data object MainScreen
+    data class MainScreen(var rounds: Int)
     @Serializable
-    data class SettingsScreen(val rounds: Int)
+    data object SettingsScreen
     @Serializable
     data class QuestionsScreen(var rounds: Int)
 }
@@ -22,15 +22,22 @@ object TrivialDestination{
 @Composable
 fun TrivialNavigateSample(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = TrivialDestination.MainScreen) {
-        composable<TrivialDestination.MainScreen> { TrivialMenu(
-            navigateToQuestions = { navController.navigate(TrivialDestination.QuestionsScreen(it)) }
-        )
+    NavHost(navController = navController, startDestination = TrivialDestination.MainScreen(5)) {
+        composable<TrivialDestination.MainScreen> {  backStack ->
+            val rounds = backStack.toRoute<TrivialDestination.MainScreen>().rounds
+            TrivialMenu(
+                navigateToSettings = { navController.navigate((TrivialDestination.SettingsScreen)) },
+                navigateToQuestions = { navController.navigate(TrivialDestination.QuestionsScreen(it)) },
+                rounds
+            )
         }
-        composable<TrivialDestination.SettingsScreen> { SettingsScreen () }
+        composable<TrivialDestination.SettingsScreen> { SettingsScreen (
+            navigateBackToMenu = { navController.navigate(TrivialDestination.MainScreen(it)) }
+        ) }
         composable<TrivialDestination.QuestionsScreen>{ backStack ->
             val rounds = backStack.toRoute<TrivialDestination.QuestionsScreen>().rounds
-            QuestionNav(rounds) }
+            QuestionNav(rounds)
+        }
     }
 }
 
@@ -182,13 +189,13 @@ fun QuestionNav( rounds: Int ){
         is Question.Question1 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question2(it)) },
-            unit = "Science-Biology",
-            askFor = "Which of this animals is not an arachnid?",
-            answer1 = "Scorpion",
-            answer2 = "Megarachne",
-            answer3 = "Tick",
-            answer4 = "All of them are arachnids",
-            clueItsYourAnswerCorrect = "Sometimes names are deceiving",
+            unit = "Science",
+            askFor = "What temperature does water have to be to boil at sea level?",
+            answer1 = "50ºC",
+            answer2 = "100ºC",
+            answer3 = "120ºC",
+            answer4 = "39ºC",
+            clueItsYourAnswerCorrect = "Water is the best drink, I'm '100'% sure",
             correctOne = 2
         )
 
@@ -207,20 +214,20 @@ fun QuestionNav( rounds: Int ){
         is Question.Question3 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question4(it)) },
-            unit = "",
-            askFor =  "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
+            unit = "Hello Kitty",
+            askFor = "What does Hello Kittys name mean?",
+            answer1 = "Meaw meaw",
+            answer2 = "Hola gatito",
+            answer3 = "Hello demon",
+            answer4 = "Puss in boots",
+            clueItsYourAnswerCorrect = "She's a satanic cat. What do you think?",
             correctOne = 3
         )
         is Question.Question4 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question5(it)) },
             unit = "",
-            askFor =  "",
+            askFor = "",
             answer1 = "",
             answer2 = "",
             answer3 = "",
@@ -294,13 +301,13 @@ fun QuestionNav( rounds: Int ){
         is Question.Question9 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question10(it)) },
-            unit = "",
-            askFor =  "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
+            unit = "Science-Biology",
+            askFor = "Which of this animals is not an arachnid?",
+            answer1 = "Scorpion",
+            answer2 = "Megarachne",
+            answer3 = "Tick",
+            answer4 = "All of them are arachnids",
+            clueItsYourAnswerCorrect = "Sometimes names are deceiving",
             correctOne = 2
         )
         is Question.Question10 -> if(rounds == 10){

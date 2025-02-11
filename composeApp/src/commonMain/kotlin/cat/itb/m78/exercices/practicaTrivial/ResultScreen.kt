@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun ResultScreen(
@@ -15,12 +16,17 @@ fun ResultScreen(
     points: Int,
     rounds: Int
 ){
-    var congratsMesage : String = ""
+    val congratsMesage: String
+    if (points < rounds / 2) { congratsMesage = "Better luck on the next try" }
+    else if (points < rounds / 4 * 3) { congratsMesage = "Not bad" }
+    else if (points < rounds) { congratsMesage = "Wel done" }
+    else { congratsMesage = "Congratulations!!" }
+
     Column (modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center)
     {
-        Text("You got $points with $rounds questions answered. $congratsMesage")
+        Text("You got $points points out of $rounds.", textAlign = TextAlign.Center)
         Text(congratsMesage)
         Button(onClick = { navigateToTrivialMenu() }){
             Text("Go back to de start menu")
