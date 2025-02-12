@@ -47,119 +47,7 @@ private class ManualNavAppViewModel : ViewModel() {
         currentQuestion.value = question
     }
 }
-//Manera simple
-data class MyQuestion(
-    val unit : String,
-    val askFor : String,
-    val answer1 : String,
-    val answer2 : String,
-    val answer3 : String,
-    val answer4 : String,
-    val clueItsYourAnswerCorrect : String,
-    val correctOne : Int
-)
-val questions = listOf(
-    MyQuestion(//Question 1
-        unit = "Science-Biology",
-        askFor = "Which of this animals is not an arachnid?",
-        answer1 = "Scorpion",
-        answer2 = "Megarachne",
-        answer3 = "Tick",
-        answer4 = "All of them are arachnids",
-        clueItsYourAnswerCorrect = "Sometimes names are deceiving",
-        correctOne = 2
-    ),
-    MyQuestion(//Question 2
-        unit = "WarHammer 40.000",
-        askFor = "Which is the characteristic of a purple ork",
-        answer1 = "They are faster",
-        answer2 = "They are lucky",
-        answer3 = "They explode better",
-        answer4 = "They are invisible",
-        clueItsYourAnswerCorrect = "Have you ever seen a purple ork?",
-        correctOne = 4
-    ),
-    MyQuestion(//Question 3
-        unit = "DOOM",
-        askFor = "Which of the following demons can bee a problem for the Slayer?",
-        answer1 = "Cyberdemon",
-        answer2 = "Marauder",
-        answer3 = "Any of them",
-        answer4 = "Icon of Sin",
-        clueItsYourAnswerCorrect = "The Slayer is undefeatable",
-        correctOne = 3
-    ),
-    MyQuestion(//Question 4
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 2
-    ),
-    MyQuestion(//Question 5
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 3
-    ),
-    MyQuestion(//Question 6
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 1
-    ),
-    MyQuestion(//Question 7
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 1
-    ),
-    MyQuestion(//Question 8
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 4
-    ),
-    MyQuestion(//Question 9
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 2
-    ),
-    MyQuestion(//Question 10
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 3
-    )
-)
+
 //Me he complicado la vida
 private sealed interface Question {
     data class Question1(val points: Int) : Question
@@ -217,22 +105,22 @@ fun QuestionNav( rounds: Int ){
             unit = "Hello Kitty",
             askFor = "What does Hello Kittys name mean?",
             answer1 = "Meaw meaw",
-            answer2 = "Hola gatito",
-            answer3 = "Hello demon",
+            answer2 = "Hello demon",
+            answer3 = "Hola gatito",
             answer4 = "Puss in boots",
-            clueItsYourAnswerCorrect = "She's a satanic cat. What do you think?",
+            clueItsYourAnswerCorrect = "You just need to translate it",
             correctOne = 3
         )
         is Question.Question4 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question5(it)) },
-            unit = "",
-            askFor = "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
+            unit = "Art or Science",
+            askFor = "Which are the primary colors of light?",
+            answer1 = "Magenta, Green and Cyan",
+            answer2 = "Red, Green and Blue",
+            answer3 = "Magenta, Yellow and Cyan",
+            answer4 = "Red, Yellow and Blue",
+            clueItsYourAnswerCorrect = "Yellow and Green change places depending if you ask for the colors of light and the primary pigment colors",
             correctOne = 2
         )
         is Question.Question5 -> if (rounds == 5){
@@ -289,13 +177,13 @@ fun QuestionNav( rounds: Int ){
         is Question.Question8 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question9(it)) },
-            unit = "",
-            askFor =  "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
+            unit = "Mythology",
+            askFor =  "How will you call a dragon with two bat wings and two legs?",
+            answer1 = "Chines dragon",
+            answer2 = "Tarasca",
+            answer3 = "Common dragon",
+            answer4 = "Wyvern",
+            clueItsYourAnswerCorrect = "The chines dragons doesn't have wings and the Tarasca it's also named like Cucafera. Also, the common dragons have fore legs.",
             correctOne = 4
         )
         is Question.Question9 -> QuestionScreen(
@@ -340,13 +228,13 @@ fun QuestionNav( rounds: Int ){
         is Question.Question11 -> QuestionScreen(
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question12(it)) },
-            unit = "",
-            askFor =  "",
-            answer1 = "",
-            answer2 = "",
-            answer3 = "",
-            answer4 = "",
-            clueItsYourAnswerCorrect = "",
+            unit = "Mythology",
+            askFor =  "Which is between this gods and goddesses who is not a moon deity?",
+            answer1 = "Selene",
+            answer2 = "Thoth",
+            answer3 = "Ilargi",
+            answer4 = "Eguzkilore",
+            clueItsYourAnswerCorrect = "Eguziklore was as shining as the sun",
             correctOne = 4
         )
         is Question.Question12 -> QuestionScreen(

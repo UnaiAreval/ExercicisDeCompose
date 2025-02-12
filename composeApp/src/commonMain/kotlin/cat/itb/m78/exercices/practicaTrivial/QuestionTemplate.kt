@@ -131,3 +131,166 @@ fun QuestionScreen(
         }
     }
 }
+//Manera simple
+data class MyQuestion(
+    val unit : String,
+    val askFor : String,
+    val answer1 : String,
+    val answer2 : String,
+    val answer3 : String,
+    val answer4 : String,
+    val clueItsYourAnswerCorrect : String,
+    val correctOne : Int
+)
+val questions = listOf(
+    MyQuestion(//Question 1
+        unit = "Science-Biology",
+        askFor = "Which of this animals is not an arachnid?",
+        answer1 = "Scorpion",
+        answer2 = "Megarachne",
+        answer3 = "Tick",
+        answer4 = "All of them are arachnids",
+        clueItsYourAnswerCorrect = "Sometimes names are deceiving",
+        correctOne = 2
+    ),
+    MyQuestion(//Question 2
+        unit = "WarHammer 40.000",
+        askFor = "Which is the characteristic of a purple ork",
+        answer1 = "They are faster",
+        answer2 = "They are lucky",
+        answer3 = "They explode better",
+        answer4 = "They are invisible",
+        clueItsYourAnswerCorrect = "Have you ever seen a purple ork?",
+        correctOne = 4
+    ),
+    MyQuestion(//Question 3
+        unit = "DOOM",
+        askFor = "Which of the following demons can bee a problem for the Slayer?",
+        answer1 = "Cyberdemon",
+        answer2 = "Marauder",
+        answer3 = "Any of them",
+        answer4 = "Icon of Sin",
+        clueItsYourAnswerCorrect = "The Slayer is undefeatable",
+        correctOne = 3
+    ),
+    MyQuestion(//Question 4
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 2
+    ),
+    MyQuestion(//Question 5
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 3
+    ),
+    MyQuestion(//Question 6
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 1
+    ),
+    MyQuestion(//Question 7
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 1
+    ),
+    MyQuestion(//Question 8
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 4
+    ),
+    MyQuestion(//Question 9
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 2
+    ),
+    MyQuestion(//Question 10
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 3
+    ),
+    MyQuestion(//Question 11
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 1
+    ),
+    MyQuestion(//Question 12
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 1
+    ),
+    MyQuestion(//Question 13
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 4
+    ),
+    MyQuestion(//Question 14
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 2
+    ),
+    MyQuestion(//Question 15
+        unit = "",
+        askFor =  "",
+        answer1 = "",
+        answer2 = "",
+        answer3 = "",
+        answer4 = "",
+        clueItsYourAnswerCorrect = "",
+        correctOne = 3
+    )
+)
