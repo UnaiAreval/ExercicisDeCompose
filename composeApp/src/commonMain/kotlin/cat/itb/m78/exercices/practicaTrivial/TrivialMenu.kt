@@ -39,7 +39,7 @@ fun TrivialMenu(
         difficulty.value = "Can't be more difficult"
     }
 
-    Column (modifier = Modifier.fillMaxSize().background(Color.Blue),
+    Column (modifier = Modifier.fillMaxSize().background(Color.Cyan),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
 

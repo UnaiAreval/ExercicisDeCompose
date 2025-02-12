@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -42,6 +43,7 @@ fun QuestionScreen(
         verticalArrangement = Arrangement.Center) {
         if (!questionAnswered.value){
             Text(unit, modifier = Modifier.padding(20.dp))
+            Spacer(modifier = Modifier.size(25.dp))
 
             Image(
                 painter = painterResource(Res.drawable.trivial),
@@ -50,6 +52,7 @@ fun QuestionScreen(
             )
 
             Text(askFor)
+            Spacer(modifier = Modifier.size(10.dp))
             Row {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Button(
@@ -124,6 +127,7 @@ fun QuestionScreen(
                 Text("Next Question")
             }
         }
+        Spacer(modifier = Modifier.size(20.dp))
         if (answeredWell.value){
             Text("Your points ${points + 1}", textAlign = TextAlign.Center)
         } else{

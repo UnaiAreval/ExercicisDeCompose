@@ -91,7 +91,7 @@ fun QuestionNav( rounds: Int ){
             currentQuestion.points,
             navigateToNextQuestion = { viewModel.navigateTo(Question.Question3(it)) },
             unit = "WarHammer 40.000",
-            askFor = "Which is the characteristic of a purple ork",
+            askFor = "Which is the characteristic of a purple ork?",
             answer1 = "They are faster",
             answer2 = "They are lucky",
             answer3 = "They explode better",
@@ -120,20 +120,20 @@ fun QuestionNav( rounds: Int ){
             answer2 = "Red, Green and Blue",
             answer3 = "Magenta, Yellow and Cyan",
             answer4 = "Red, Yellow and Blue",
-            clueItsYourAnswerCorrect = "Yellow and Green change places depending if you ask for the colors of light and the primary pigment colors",
+            clueItsYourAnswerCorrect = "Yellow and Green change places depending if you ask for \n the primary light colors and the primary pigment colors",
             correctOne = 2
         )
         is Question.Question5 -> if (rounds == 5){
             QuestionScreen(
                 currentQuestion.points,
                 navigateToNextQuestion = { viewModel.navigateTo(Question.Result(it, rounds)) },
-                unit = "",
-                askFor =  "",
-                answer1 = "",
-                answer2 = "",
-                answer3 = "",
-                answer4 = "",
-                clueItsYourAnswerCorrect = "",
+                unit = "Maths",
+                askFor =  "How much is 33 + 77",
+                answer1 = "100",
+                answer2 = "107",
+                answer3 = "110",
+                answer4 = "103",
+                clueItsYourAnswerCorrect = "30 + 70 = 100 \n 3 + 7 = 10 \n 30 + 3 + 70 + 7 = ?",
                 correctOne = 3
             )
         } else{
@@ -183,7 +183,7 @@ fun QuestionNav( rounds: Int ){
             answer2 = "Tarasca",
             answer3 = "Common dragon",
             answer4 = "Wyvern",
-            clueItsYourAnswerCorrect = "The chines dragons doesn't have wings and the Tarasca it's also named like Cucafera. Also, the common dragons have fore legs.",
+            clueItsYourAnswerCorrect = "Chines dragons doesn't have wings, \n the Tarasca it's also named like Cucafera \n and common dragons have fore legs.",
             correctOne = 4
         )
         is Question.Question9 -> QuestionScreen(
