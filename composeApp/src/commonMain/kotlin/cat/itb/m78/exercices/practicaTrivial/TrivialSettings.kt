@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsScreen(
-    navigateBackToMenu:(Int)-> Unit
+    navigateBackToMenu:()-> Unit
 ){
-    val newRounds = remember{ mutableStateOf(5) }
+    val roundsForTheString = remember{ mutableStateOf(rounds) }
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -29,14 +29,26 @@ fun SettingsScreen(
         Row {
             Column {
                 Text("Select rounds amount: ", textAlign = TextAlign.Center)
-                Button(onClick = { newRounds.value = 5 }){ Text("5 rounds") }
-                Button(onClick = { newRounds.value = 10}){ Text("10 rounds") }
-                Button(onClick = { newRounds.value = 15}){ Text("15 rounds") }
-                Text("Current amount: ${newRounds.value}", textAlign = TextAlign.Center)
+                Button(onClick = {
+                    rounds = 5
+                    roundsForTheString.value = rounds
+                }){ Text("5 rounds") }
+
+                Button(onClick = {
+                    rounds = 10
+                    roundsForTheString.value = rounds
+                }){ Text("10 rounds") }
+
+                Button(onClick = {
+                    rounds = 15
+                    roundsForTheString.value = rounds
+                }){ Text("15 rounds") }
+
+                Text("Current amount: ${roundsForTheString.value}", textAlign = TextAlign.Center)
             }
         }
         Spacer(modifier = Modifier.size(250.dp))
-        Button(onClick = { navigateBackToMenu(newRounds.value) }){
+        Button(onClick = { navigateBackToMenu() }){
             Text("Return to the game menu")
         }
     }

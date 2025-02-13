@@ -13,11 +13,11 @@ import androidx.compose.ui.text.style.TextAlign
 @Composable
 fun ResultScreen(
     navigateToTrivialMenu:()-> Unit,
-    points: Int,
-    rounds: Int
+    points: Int
 ){
+
     val congratsMesage: String
-    if (points < rounds / 2) { congratsMesage = "Better luck on the next try" }
+    if ((points < rounds / 2 + 1 && rounds % 2 == 1) || (points < rounds / 2 && rounds % 2 == 0)) { congratsMesage = "Better luck on the next try" }
     else if (points < rounds / 4 * 3) { congratsMesage = "Not bad" }
     else if (points < rounds) { congratsMesage = "Wel done" }
     else { congratsMesage = "Congratulations!!" }

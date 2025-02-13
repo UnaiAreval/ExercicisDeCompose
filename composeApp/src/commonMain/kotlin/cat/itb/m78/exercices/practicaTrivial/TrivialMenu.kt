@@ -26,8 +26,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun TrivialMenu(
     navigateToSettings:() -> Unit,
-    navigateToQuestions: (Int)-> Unit,
-    rounds: Int
+    navigateToQuestions: (Int)-> Unit
 ){
     val difficulty = remember { mutableStateOf("") }
 
