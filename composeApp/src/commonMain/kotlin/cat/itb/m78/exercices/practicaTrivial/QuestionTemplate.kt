@@ -46,14 +46,14 @@ val questions = listOf(
         correctOne = 2
     ),
     MyQuestion(//Question 2
-        unit = "WarHammer 40.000",
-        askFor = "Which is the characteristic of a purple ork?",
-        answer1 = "They are faster",
-        answer2 = "They are lucky",
-        answer3 = "They explode better",
-        answer4 = "They are invisible",
-        clueItsYourAnswerCorrect = "Have you ever seen a purple ork?",
-        correctOne = 4
+        unit = "Garfield",
+        askFor =  "Which day of the week does Garfield hate?",
+        answer1 = "Wednesday",
+        answer2 = "Juernes",
+        answer3 = "Monday",
+        answer4 = "Sunday",
+        clueItsYourAnswerCorrect = "He hates the first day of work",
+        correctOne = 3
     ),
     MyQuestion(//Question 3
         unit = "Hello Kitty",
@@ -66,7 +66,7 @@ val questions = listOf(
         correctOne = 3
     ),
     MyQuestion(//Question 4
-        unit = "Art or Science",
+        unit = "Light",
         askFor = "Which are the primary colors of light?",
         answer1 = "Magenta, Green and Cyan",
         answer2 = "Red, Green and Blue",
@@ -126,14 +126,14 @@ val questions = listOf(
         correctOne = 2
     ),
     MyQuestion(//Question 10
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
-        correctOne = 3
+        unit = "WarHammer 40.000",
+        askFor = "Which is the characteristic of a purple ork?",
+        answer1 = "They are faster",
+        answer2 = "They are lucky",
+        answer3 = "They explode better",
+        answer4 = "They are invisible",
+        clueItsYourAnswerCorrect = "Have you ever seen a purple ork?",
+        correctOne = 4
     ),
     MyQuestion(//Question 11
         unit = "Mythology",
@@ -146,13 +146,13 @@ val questions = listOf(
         correctOne = 4
     ),
     MyQuestion(//Question 12
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
+        unit = "Computer games",
+        askFor =  "What year did the PS2 come out?",
+        answer1 = "2000",
+        answer2 = "2004",
+        answer3 = "2006",
+        answer4 = "2013",
+        clueItsYourAnswerCorrect = "The PS2 came out with the new millennium",
         correctOne = 1
     ),
     MyQuestion(//Question 13
