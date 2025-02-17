@@ -156,13 +156,13 @@ val questions = listOf(
         correctOne = 1
     ),
     MyQuestion(//Question 13
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
+        unit = "Astrology",
+        askFor =  "Which of Jupiter's moons is supposed to have life?",
+        answer1 = "Valetudo",
+        answer2 = "Taygate",
+        answer3 = "Arche",
+        answer4 = "Europa",
+        clueItsYourAnswerCorrect = "This moon is named as a continent",
         correctOne = 4
     ),
     MyQuestion(//Question 14
@@ -176,13 +176,13 @@ val questions = listOf(
         correctOne = 0
     ),
     MyQuestion(//Question 15
-        unit = "",
-        askFor =  "",
-        answer1 = "",
-        answer2 = "",
-        answer3 = "",
-        answer4 = "",
-        clueItsYourAnswerCorrect = "",
+        unit = "Paleontology",
+        askFor =  "Which of these animals was not a dinosaur?",
+        answer1 = "Spinosaurus",
+        answer2 = "Carnotaurus",
+        answer3 = "Pterodactyl",
+        answer4 = "Stegosaurus",
+        clueItsYourAnswerCorrect = "Pterodactyls were not dinosaurs",
         correctOne = 3
     )
 )

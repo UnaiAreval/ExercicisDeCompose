@@ -28,16 +28,6 @@ fun TrivialMenu(
     navigateToSettings:() -> Unit,
     navigateToQuestions: (Int)-> Unit
 ){
-    val difficulty = remember { mutableStateOf("") }
-
-    if (rounds == 5){
-        difficulty.value = "Easy"
-    } else if (rounds == 10) {
-        difficulty.value = "Hard"
-    } else{
-        difficulty.value = "Can't be more difficult"
-    }
-
     Column (modifier = Modifier.fillMaxSize().background(Color.Cyan),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
@@ -57,7 +47,6 @@ fun TrivialMenu(
 
         Column (horizontalAlignment = Alignment.CenterHorizontally) {
             Text("Number of rounds: $rounds", modifier = Modifier.padding(10.dp), textAlign = TextAlign.Center)
-            Text("Difficulty: " + difficulty.value, modifier = Modifier.padding(10.dp), textAlign = TextAlign.Center)
         }
     }
 }
