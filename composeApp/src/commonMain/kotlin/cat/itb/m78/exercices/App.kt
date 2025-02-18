@@ -1,6 +1,7 @@
 package cat.itb.m78.exercices
 
 import androidx.compose.runtime.*
+import cat.itb.m78.exercices.calculatorApp.CalculatorNav
 
 /* Exercicis
 import cat.itb.m78.exercices.state.GoodTime
@@ -25,5 +26,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    TrivialNavigateSample()
+    CalculatorNav()
 }
