@@ -16,6 +16,7 @@ import cat.itb.m78.exercices.viewModel.CounterWhithoutViewModel
 import cat.itb.m78.exercices.navigation.ManualNav
 import cat.itb.m78.exercices.navigation.LibraryNavSample
  Final d'els exercicis*/
+import cat.itb.m78.exercices.navigation.TicTacToeSample
 
 //Llibreria amb tots els exercicis
 import cat.itb.m78.exercices.navigation.NavExercisesScreenSample
@@ -26,5 +27,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    CalculatorNav()
+    TicTacToeSample()
 }
