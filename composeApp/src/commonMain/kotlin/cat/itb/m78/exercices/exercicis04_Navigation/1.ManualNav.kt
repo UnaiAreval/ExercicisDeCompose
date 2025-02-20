@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.navigation
+package cat.itb.m78.exercices.exercicis04_Navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

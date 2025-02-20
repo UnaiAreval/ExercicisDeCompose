@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.calculatorApp
+package cat.itb.m78.exercices.Examen_CalculatorApp
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf

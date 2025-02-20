@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.stateless
+package cat.itb.m78.exercices.exercicis01_Stateless
 
 data class Message(val author: String, val body: String)
 

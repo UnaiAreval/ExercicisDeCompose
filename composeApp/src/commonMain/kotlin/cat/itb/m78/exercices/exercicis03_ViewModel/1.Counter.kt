@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.viewModel
+package cat.itb.m78.exercices.exercicis03_ViewModel
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

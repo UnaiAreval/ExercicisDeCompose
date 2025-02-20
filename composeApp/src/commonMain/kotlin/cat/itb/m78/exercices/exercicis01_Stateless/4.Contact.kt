@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.stateless
+package cat.itb.m78.exercices.exercicis01_Stateless
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

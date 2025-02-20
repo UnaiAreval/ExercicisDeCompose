@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices.state
+package cat.itb.m78.exercices.exercicis02_State
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
