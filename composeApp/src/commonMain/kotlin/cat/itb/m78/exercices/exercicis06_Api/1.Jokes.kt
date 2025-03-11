@@ -35,9 +35,7 @@ object JokesApi{
 }
 
 class JokeViewModel() : ViewModel(){
-    val data = mutableStateOf<List<Joke>>(
-        value = TODO()
-    )
+    val data = mutableStateOf<List<Joke>>( value = TODO() )
     init{
         viewModelScope.launch(Dispatchers.Default){
             data.value = JokesApi.list()

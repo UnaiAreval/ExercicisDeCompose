@@ -36,9 +36,7 @@ object CountrieApi{
 }
 
 class CountriesViewModel() : ViewModel(){
-    val countries = mutableStateOf<List<Countrie>>(
-        value = TODO()
-    )
+    val countries = mutableStateOf<List<Countrie>>( value = TODO() )
     init{
         viewModelScope.launch(Dispatchers.Default){
             countries.value = CountrieApi.list()

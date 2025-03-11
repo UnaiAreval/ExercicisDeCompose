@@ -141,7 +141,6 @@ compose.desktop {
         }
     }
 }
-
 tasks.register<ComposeHotRun>("runHot") {
     mainClass.set("HotrunKt")
 }
