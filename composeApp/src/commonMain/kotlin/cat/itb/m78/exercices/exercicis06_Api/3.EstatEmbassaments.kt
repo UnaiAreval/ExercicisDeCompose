@@ -63,7 +63,7 @@ fun LlistaEmbassaments(list: List<Embassament>){
         Row {
             Text(list[i].name)
             Button( onClick = {
-                LecturesEmbassament(list[i])
+
             }){
                 Text("Veure les lectures")
             }
