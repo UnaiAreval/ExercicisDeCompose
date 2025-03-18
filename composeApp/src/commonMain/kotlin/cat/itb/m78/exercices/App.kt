@@ -16,6 +16,8 @@ import cat.itb.m78.exercices.exercicis04_Navigation.ManualNav
 import cat.itb.m78.exercices.exercicis04_Navigation.LibraryNavSample
 import cat.itb.m78.exercices.exercicis05_Settings.CountViewViewScreen
 import cat.itb.m78.exercices.exercicis05_Settings.RememberNameViewScreen
+import cat.itb.m78.exercices.exercicis06_Api.CountrieScreen
+import cat.itb.m78.exercices.exercicis06_Api.EmbassamentScreen
 import cat.itb.m78.exercices.exercicis06_Api.JokeScreen
 
 //Llibreria amb tots els exercicis
@@ -26,5 +28,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    RememberNameViewScreen()
+    EmbassamentScreen()
 }

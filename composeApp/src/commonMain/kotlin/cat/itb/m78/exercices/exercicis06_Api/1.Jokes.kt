@@ -1,7 +1,9 @@
 package cat.itb.m78.exercices.exercicis06_Api
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,7 +37,7 @@ object JokesApi{
 }
 
 class JokeViewModel() : ViewModel(){
-    val data = mutableStateOf<List<Joke>>( value = TODO() )
+    val data = mutableStateOf<List<Joke>?>( null )
     init{
         viewModelScope.launch(Dispatchers.Default){
             data.value = JokesApi.list()
@@ -50,9 +52,13 @@ fun JokeScreen(){
 }
 
 @Composable
-fun PrintJoke(jokes: List<Joke>){
-    val jokeNum : Int = Random.nextInt(0, jokes.size - 1)
-    val joke :Joke = jokes[jokeNum]
+fun PrintJoke(jokes: List<Joke>?){
+    var joke = Joke("", "")
 
-    println("${joke.setup} \n ${joke.punchline}")
+    if (jokes != null){
+        val jokeNum = remember { mutableStateOf( Random.nextInt(0, jokes.size - 1) ) }
+        joke = jokes[jokeNum.value]
+    }
+
+    Text("Broma \n ${joke.setup} \n ${joke.punchline}")
 }
