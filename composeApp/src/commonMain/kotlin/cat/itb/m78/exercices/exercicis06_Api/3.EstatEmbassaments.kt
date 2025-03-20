@@ -1,8 +1,6 @@
 package cat.itb.m78.exercices.exercicis06_Api
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +25,6 @@ import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Month
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -38,9 +35,9 @@ import kotlinx.serialization.json.Json
 data class Embassament(
     @SerialName ("dia") val date: String,
     @SerialName  ("estaci") val name: String,
-    @SerialName ("nivell_absolut") val level: Double,
-    @SerialName ("percentatge_volum_embassat") val volumePercent: Double,
-    @SerialName ("volum_embassat") val volume: Double,
+    @SerialName ("nivell_absolut") val totalLevel: String,
+    @SerialName ("percentatge_volum_embassat") val volumePercent: String,
+    @SerialName ("volum_embassat") val volume: String,
 )
 
 object EmbassamentApi{
@@ -53,6 +50,8 @@ object EmbassamentApi{
         }
     }
     suspend fun list() = client.get(url).body<List<Embassament>>()
+
+    suspend fun detail(name: String) = client.get("$url?estaci=$name")
 }
 
 class EmvassamentViewModel : ViewModel(){
@@ -64,7 +63,7 @@ class EmvassamentViewModel : ViewModel(){
     }
 }
 
-object ScreenDestination {
+object EmbassamentNavigation {
     @Serializable
     data object ListEmbassaments
     @Serializable
@@ -76,18 +75,18 @@ fun EmbassamentScreen(){
     val viewModel = viewModel{ EmvassamentViewModel() }
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = ScreenDestination.ListEmbassaments) {
-        composable<ScreenDestination.ListEmbassaments> {
+    NavHost(navController = navController, startDestination = EmbassamentNavigation.ListEmbassaments) {
+        composable<EmbassamentNavigation.ListEmbassaments> {
             LlistaEmbassaments(
                 viewModel.embassaments.value,
-                navigateToInfoEmbassament = { navController.navigate(ScreenDestination.InfoEmbassament(it)) }
+                navigateToInfoEmbassament = { navController.navigate(EmbassamentNavigation.InfoEmbassament(it)) }
             )
         }
-        composable<ScreenDestination.InfoEmbassament> {backStack ->
-            val embassament = backStack.toRoute<ScreenDestination.InfoEmbassament>().embassamentName
+        composable<EmbassamentNavigation.InfoEmbassament> {backStack ->
+            val embassament = backStack.toRoute<EmbassamentNavigation.InfoEmbassament>().embassamentName
             InfoEmbassament(
-                embassament,
-                navigateToListEmbassaments = { navController.navigate(ScreenDestination.ListEmbassaments) }
+                viewModel.embassaments.value!!, //Així no és, s'ha de cambiar. Ho he possat perquè no doni error
+                navigateToListEmbassaments = { navController.navigate(EmbassamentNavigation.ListEmbassaments) }
             )
         }
     }
@@ -96,14 +95,6 @@ fun EmbassamentScreen(){
 @Composable
 fun LlistaEmbassaments(list: List<Embassament>?, navigateToInfoEmbassament: (String)-> Unit){
     if (list != null) {
-        for (i in 0..list.size - 2) {
-            for (j in 1..<list.size){
-                if (list[i].name == list[j].name){
-
-                }
-            }
-        }
-
         LazyColumn (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             for (i in list.indices) {
                 item {
@@ -122,23 +113,20 @@ fun LlistaEmbassaments(list: List<Embassament>?, navigateToInfoEmbassament: (Str
 }
 
 @Composable
-fun InfoEmbassament(embassamentName: String, navigateToListEmbassaments: ()-> Unit){
-    val list : List<Embassament>
+fun InfoEmbassament(list: List<Embassament>, navigateToListEmbassaments: ()-> Unit){
     Column {
-        /*
         LazyColumn (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             for (i in list.indices) {
                 item {
                     Column (modifier = Modifier.padding(10.dp)) {
                         Text("${list[i].name} \n " +
                                 "\n Data de la lectura: ${list[i].date} " +
-                                "\nNivell absolut: ${list[i].level} " +
+                                "\nNivell absolut: ${list[i].totalLevel} " +
                                 "\nVolum embassament: ${list[i].volume} Percentatge del volum de l'embassament: ${list[i].volumePercent}")
                     }
                 }
             }
         }
-        */
         Button(onClick = {
             navigateToListEmbassaments()
         }){
@@ -146,16 +134,3 @@ fun InfoEmbassament(embassamentName: String, navigateToListEmbassaments: ()-> Un
         }
     }
 }
-/*
-object InfoEmbassamentApi{
-    val url = "https://analisi.transparenciacatalunya.cat/resource/gn9e-3qhr.json?estaci=$embassamentName"
-    val client = HttpClient(){
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
-        }
-    }
-    suspend fun list() = client.get(url).body<List<Embassament>>()
-}
-*/
