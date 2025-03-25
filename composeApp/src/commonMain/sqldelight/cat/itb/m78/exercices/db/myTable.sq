@@ -1,0 +1,9 @@
+CREATE TABLE myTable (
+  id INTEGER PRIMARY KEY NOT NULL,
+  text TEXT NOT NULL
+);
+CREATE INDEX myTable_full_name ON myTable(text);
+selectAll:
+SELECT * FROM myTable;
+insert:
+INSERT INTO myTable(text) VALUES (?);

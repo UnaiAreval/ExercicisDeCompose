@@ -80,6 +80,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
             implementation("app.cash.sqldelight:android-driver:2.0.2")
+            implementation("androidx.startup:startup-runtime:1.2.0")
         }
 
         jvmMain.dependencies {

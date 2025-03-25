@@ -2,7 +2,6 @@ CREATE TABLE message (
   id INTEGER PRIMARY KEY NOT NULL,
   text TEXT NOT NULL
 );
-CREATE INDEX myTable_full_name ON message(text);
 selectAll:
 SELECT * FROM message;
 insert:
