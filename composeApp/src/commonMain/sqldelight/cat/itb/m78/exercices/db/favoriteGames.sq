@@ -1,0 +1,10 @@
+CREATE TABLE favoriteGames (
+    id INTEGER PRIMARY KEY NOT NULL
+);
+
+selectAll:
+SELECT * FROM favoriteGames;
+insert:
+INSERT INTO favoriteGames(id) VALUES (id);
+delete:
+DELETE FROM favoriteGames WHERE id = (?);
