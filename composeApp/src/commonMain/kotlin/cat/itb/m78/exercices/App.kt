@@ -19,6 +19,7 @@ import cat.itb.m78.exercices.exercicis05_Settings.RememberNameViewScreen
 import cat.itb.m78.exercices.exercicis06_Api.CountrieScreen
 import cat.itb.m78.exercices.exercicis06_Api.EmbassamentScreen
 import cat.itb.m78.exercices.exercicis06_Api.JokeScreen
+import cat.itb.m78.exercices.exercicis07_DataBase.Messages.MessagesScreen
 
 //Llibreria amb tots els exercicis
 //Practica del trivial
@@ -28,5 +29,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    EmbassamentScreen()
+    MessagesScreen()
 }
