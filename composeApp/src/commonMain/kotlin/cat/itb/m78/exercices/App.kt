@@ -20,6 +20,7 @@ import cat.itb.m78.exercices.exercicis06_Api.CountrieScreen
 import cat.itb.m78.exercices.exercicis06_Api.EmbassamentScreen
 import cat.itb.m78.exercices.exercicis06_Api.JokeScreen
 import cat.itb.m78.exercices.exercicis07_DataBase.Messages.MessagesScreen
+import cat.itb.m78.exercices.practicaAPI_DB.GamesScreen
 
 //Llibreria amb tots els exercicis
 //Practica del trivial
@@ -29,5 +30,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    MessagesScreen()
+    GamesScreen()
 }

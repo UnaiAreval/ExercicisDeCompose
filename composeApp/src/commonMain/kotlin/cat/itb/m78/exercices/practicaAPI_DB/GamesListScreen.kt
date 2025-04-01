@@ -1,19 +1,34 @@
 package cat.itb.m78.exercices.practicaAPI_DB
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import coil3.compose.AsyncImage
+import coil3.size.Size
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.util.Platform
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -48,6 +63,17 @@ object GamesApi{
     suspend fun list() = client.get(url).body<List<Game>>()
 }
 
+class GamesViewModel : ViewModel() {
+    val games = mutableStateOf<List<Game>?>(null)
+
+    init {
+        viewModelScope.launch {
+            games.value = GamesApi.list()
+
+        }
+    }
+}
+
 object GamesNavigation{
     @Serializable
     data object MainGamesList
@@ -57,26 +83,78 @@ object GamesNavigation{
     data class GameInfomation(val gameId: Int)
 }
 
-class GamesListViewModel : ViewModel(){
-    val games = mutableStateOf<List<Game>?>(null)
-    init {
-        viewModelScope.launch {
-            games.value = GamesApi.list()
+@Composable
+fun GamesScreen(){
+    val viewModel = viewModel { GamesViewModel() }
+
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = GamesNavigation.MainGamesList){
+        composable<GamesNavigation.MainGamesList> {
+            GamesMainScreen(
+                games = viewModel.games.value,
+                goToGame = { navController.navigate(GamesNavigation.GameInfomation(it)) },
+                goToFavorites = { navController.navigate(GamesNavigation.FavoriteGamesList) }
+            )
+        }
+        composable<GamesNavigation.GameInfomation> { backStack ->
+            val gameId = backStack.toRoute<GamesNavigation.GameInfomation>().gameId
+            GameInformation(
+                gameId,
+                viewModel.games.value!!,
+                goBack = {navController.navigate(GamesNavigation.MainGamesList)}
+            )
         }
     }
 }
 
 @Composable
-fun GamesScreen(){
-    val viewModel = viewModel { GamesListViewModel() }
+fun GamesMainScreen(games: List<Game>?, goToGame: (Int) -> Unit, goToFavorites: () -> Unit){
+    if (games != null) {
+        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()) {
+            for (game in games) {
+                item {
+                    Row {
+                        Column{
+                            Text(game.title)
+                            Text("by " + game.developer)
+                        }
+                        Button(onClick = {
+                            goToGame(game.id)
+                        }) {
+                            Text("Go to " + game.title)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable
-fun GamesMainScreen(games: List<Game>){
-    LazyColumn {
-        for (game in games){
+fun GameInformation(gameId: Int, games: List<Game>, goBack: () -> Unit){
+    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        for (g in games){
             item {
-                Text("")
+                if (gameId == g.id) {
+                    Text(g.title, fontWeight = FontWeight(900), fontSize = 30.sp)
+                    Text("Made by: " + g.developer, fontWeight = FontWeight(600), fontSize = 15.sp)
+                    Spacer(modifier = Modifier.size(30.dp))
+                    AsyncImage(
+                        model = g.imageURL,
+                        contentDescription = "game image",
+                        modifier = Modifier.size(400.dp, 200.dp)
+                    )
+                    Spacer(modifier = Modifier.size(40.dp))
+                    Text(g.shortDescription)
+                    Button(onClick = {
+                        goBack()
+                    }){
+                        Text("Go back")
+                    }
+                }
             }
         }
     }
