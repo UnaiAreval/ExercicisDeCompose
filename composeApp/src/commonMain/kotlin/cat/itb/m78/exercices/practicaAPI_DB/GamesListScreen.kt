@@ -70,12 +70,20 @@ object GamesApi{
 class GamesViewModel : ViewModel() {
     val games = mutableStateOf<List<Game>?>(null)
     val favGamesId = mutableStateOf<List<Int>?>(null)
+    val filteredGames = mutableStateOf<List<Game>?>(null)
+
+    val filterString = mutableStateOf("")
 
     init {
         viewModelScope.launch {
             games.value = GamesApi.list()
-
+            filteredGames.value = games.value
         }
+    }
+
+    fun onUpdateFilter(newFilter: String){
+        filterString.value = newFilter
+        filteredGames.value = games.value?.filter { it.title.contains(newFilter) }
     }
 }
 
@@ -94,8 +102,9 @@ fun GamesScreen(){
     NavHost(navController = navController, startDestination = GamesNavigation.MainGamesList){
         composable<GamesNavigation.MainGamesList> {
             GamesMainScreen(
-                games = viewModel.games.value,
-                favGamesId = viewModel.favGamesId.value,
+                viewModel.filteredGames.value,
+                viewModel.filterString.value,
+                viewModel::onUpdateFilter,
                 goToGame = { navController.navigate(GamesNavigation.GameInfomation(it)) }
             )
         }
@@ -103,8 +112,8 @@ fun GamesScreen(){
             val gameId = backStack.toRoute<GamesNavigation.GameInfomation>().gameId
             GameInformation(
                 gameId,
-                viewModel.games.value!!,
-                goBack = {navController.navigate(GamesNavigation.MainGamesList)}
+                games = viewModel.games.value!!,
+                goBack = { navController.navigate(GamesNavigation.MainGamesList) }
             )
         }
     }
@@ -112,15 +121,13 @@ fun GamesScreen(){
 
 @Composable
 fun GamesMainScreen(
-    games: List<Game>?,
-    favGamesId: List<Int>?,
+    gamesToDisplay: List<Game>?,
+    filterString: String,
+    onUpdateFilter: (String) -> Unit,
     goToGame: (Int) -> Unit
 ){
 
-    val displayJustFavOnes = remember { mutableStateOf(false) }
-    val searcherText = remember { mutableStateOf("") }
-
-    if (games != null) {
+    if (gamesToDisplay != null) {
         Column (horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
 
@@ -131,78 +138,28 @@ fun GamesMainScreen(
                     contentDescription = null
                 )
                 TextField(
-                    value = searcherText.value,
+                    value = filterString,
                     label = { Text(text = "") },
-                    onValueChange = { searcherText.value = it }
+                    onValueChange = { onUpdateFilter(it) }
                 )
             }
 
             LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-                if (searcherText.value == "" && !displayJustFavOnes.value) {
-                    for (game in games) {
-                        item {
-                            Spacer(modifier = Modifier.size(30.dp))
-                        }
-                        item {
-                            Row {
-                                Column {
-                                    Text(game.title)
-                                    Text("by " + game.developer)
-                                }
-                                Spacer(modifier = Modifier.size(100.dp))
-                                Button(onClick = {
-                                    goToGame(game.id)
-                                }) {
-                                    Text("Go to " + game.title)
-                                }
-                            }
-                        }
+                for (game in gamesToDisplay) {
+                    item {
+                        Spacer(modifier = Modifier.size(30.dp))
                     }
-                }
-                else if (searcherText.value == "" && displayJustFavOnes.value){
-                    for (game in games) {
-                        for (fgID in favGamesId!!) {
-                            if (game.id == fgID) {
-                                item {
-                                    Spacer(modifier = Modifier.size(30.dp))
-                                }
-                                item {
-                                    Row {
-                                        Column {
-                                            Text(game.title)
-                                            Text("by " + game.developer)
-                                        }
-                                        Spacer(modifier = Modifier.size(100.dp))
-                                        Button(onClick = {
-                                            goToGame(game.id)
-                                        }) {
-                                            Text("Go to " + game.title)
-                                        }
-                                    }
-                                }
+                    item {
+                        Row {
+                            Column {
+                                Text(game.title)
+                                Text("by " + game.developer)
                             }
-                        }
-                    }
-                }
-                else {
-                    for (game in games) {
-                        if (game.title == searcherText.value || game.developer == searcherText.value || game.publisher == searcherText.value || game.platform == searcherText.value) {
-                            item {
-                                Spacer(modifier = Modifier.size(30.dp))
-                            }
-                            item {
-                                Row {
-                                    Column {
-                                        Text(game.title)
-                                        Text("by " + game.developer)
-                                    }
-                                    Spacer(modifier = Modifier.size(100.dp))
-                                    Button(onClick = {
-                                        goToGame(game.id)
-                                    }) {
-                                        Text("Go to " + game.title)
-                                    }
-                                }
+                            Spacer(modifier = Modifier.size(100.dp))
+                            Button(onClick = {
+                                goToGame(game.id)
+                            }) {
+                                Text("Go to " + game.title)
                             }
                         }
                     }
