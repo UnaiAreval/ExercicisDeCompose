@@ -1,15 +1,19 @@
 package cat.itb.m78.exercices.practicaAPI_DB
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +27,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import coil3.compose.AsyncImage
-import coil3.size.Size
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -33,8 +36,9 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-
-//"Enllas de la API https://www.freetogame.com/api/games"
+import m78exercices.composeapp.generated.resources.Res
+import m78exercices.composeapp.generated.resources.search_icon
+import org.jetbrains.compose.resources.painterResource
 
 @Serializable
 data class Game(
@@ -65,6 +69,7 @@ object GamesApi{
 
 class GamesViewModel : ViewModel() {
     val games = mutableStateOf<List<Game>?>(null)
+    val favGamesId = mutableStateOf<List<Int>?>(null)
 
     init {
         viewModelScope.launch {
@@ -78,8 +83,6 @@ object GamesNavigation{
     @Serializable
     data object MainGamesList
     @Serializable
-    data object FavoriteGamesList
-    @Serializable
     data class GameInfomation(val gameId: Int)
 }
 
@@ -92,8 +95,8 @@ fun GamesScreen(){
         composable<GamesNavigation.MainGamesList> {
             GamesMainScreen(
                 games = viewModel.games.value,
-                goToGame = { navController.navigate(GamesNavigation.GameInfomation(it)) },
-                goToFavorites = { navController.navigate(GamesNavigation.FavoriteGamesList) }
+                favGamesId = viewModel.favGamesId.value,
+                goToGame = { navController.navigate(GamesNavigation.GameInfomation(it)) }
             )
         }
         composable<GamesNavigation.GameInfomation> { backStack ->
@@ -108,25 +111,105 @@ fun GamesScreen(){
 }
 
 @Composable
-fun GamesMainScreen(games: List<Game>?, goToGame: (Int) -> Unit, goToFavorites: () -> Unit){
+fun GamesMainScreen(
+    games: List<Game>?,
+    favGamesId: List<Int>?,
+    goToGame: (Int) -> Unit
+){
+
+    val displayJustFavOnes = remember { mutableStateOf(false) }
+    val searcherText = remember { mutableStateOf("") }
+
     if (games != null) {
-        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
+        Column (horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()) {
-            for (game in games) {
-                item {
-                    Row {
-                        Column{
-                            Text(game.title)
-                            Text("by " + game.developer)
+
+            Row (modifier = Modifier.padding(20.dp)){
+                Image(
+                    painter = painterResource(Res.drawable.search_icon),
+                    modifier = Modifier.size(50.dp).padding(5.dp),
+                    contentDescription = null
+                )
+                TextField(
+                    value = searcherText.value,
+                    label = { Text(text = "") },
+                    onValueChange = { searcherText.value = it }
+                )
+            }
+
+            LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+                if (searcherText.value == "" && !displayJustFavOnes.value) {
+                    for (game in games) {
+                        item {
+                            Spacer(modifier = Modifier.size(30.dp))
                         }
-                        Button(onClick = {
-                            goToGame(game.id)
-                        }) {
-                            Text("Go to " + game.title)
+                        item {
+                            Row {
+                                Column {
+                                    Text(game.title)
+                                    Text("by " + game.developer)
+                                }
+                                Spacer(modifier = Modifier.size(100.dp))
+                                Button(onClick = {
+                                    goToGame(game.id)
+                                }) {
+                                    Text("Go to " + game.title)
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (searcherText.value == "" && displayJustFavOnes.value){
+                    for (game in games) {
+                        for (fgID in favGamesId!!) {
+                            if (game.id == fgID) {
+                                item {
+                                    Spacer(modifier = Modifier.size(30.dp))
+                                }
+                                item {
+                                    Row {
+                                        Column {
+                                            Text(game.title)
+                                            Text("by " + game.developer)
+                                        }
+                                        Spacer(modifier = Modifier.size(100.dp))
+                                        Button(onClick = {
+                                            goToGame(game.id)
+                                        }) {
+                                            Text("Go to " + game.title)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    for (game in games) {
+                        if (game.title == searcherText.value || game.developer == searcherText.value || game.publisher == searcherText.value || game.platform == searcherText.value) {
+                            item {
+                                Spacer(modifier = Modifier.size(30.dp))
+                            }
+                            item {
+                                Row {
+                                    Column {
+                                        Text(game.title)
+                                        Text("by " + game.developer)
+                                    }
+                                    Spacer(modifier = Modifier.size(100.dp))
+                                    Button(onClick = {
+                                        goToGame(game.id)
+                                    }) {
+                                        Text("Go to " + game.title)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
+            //Consultar per fer una barra de cerca inferior
+            //https://m2.material.io/components/bottom-navigation/android#bottom-navigation-bar
         }
     }
 }
