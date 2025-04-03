@@ -1,0 +1,9 @@
+CREATE TABLE favGames (
+  id INTEGER PRIMARY KEY NOT NULL,
+  gameId INTEGER NOT NULL
+);
+CREATE INDEX game_id ON favGames(gameId);
+selectAll:
+SELECT * FROM favGames;
+insert:
+INSERT INTO favGames(gameId) VALUES (?);
