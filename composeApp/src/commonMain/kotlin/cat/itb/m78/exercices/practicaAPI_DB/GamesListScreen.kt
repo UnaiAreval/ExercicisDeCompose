@@ -62,11 +62,6 @@ data class Game(
 @SerialName("freetogame_profile_url") val freetogameProfileUrl: String
 )
 
-data class GameFav(
-    val game: Game,
-    val fav: Boolean
-)
-
 object GamesApi{
     private val url ="https://www.freetogame.com/api/games"
     private val client = HttpClient(){
@@ -97,7 +92,7 @@ fun GamesScreen(){
             actions = {
                 NavigationBarItem(
                     onClick = {
-
+                        viewModelGamesList.getFavGames()
                     },
                     selected = false,
                     icon = {
@@ -114,6 +109,7 @@ fun GamesScreen(){
                 NavigationBarItem(
                     onClick = {
                         viewModelGamesList.retrieveEntireList()
+                        navController.navigate(GamesNavigation.MainGamesList)
                     },
                     selected = false,
                     icon = {
