@@ -79,29 +79,6 @@ object GamesApi{
     suspend fun list() = client.get(url).body<List<Game>>()
 }
 
-class GamesViewModel : ViewModel() {
-    val games = mutableStateOf<List<Game>?>(null)
-    val filteredGames = mutableStateOf<List<Game>?>(null)
-
-    val filterString = mutableStateOf("")
-
-    init {
-        viewModelScope.launch {
-            games.value = GamesApi.list()
-            filteredGames.value = games.value
-        }
-    }
-
-    fun onUpdateFilter(newFilter: String){
-        filterString.value = newFilter
-        filteredGames.value = games.value?.filter { it.title.startsWith(newFilter) }
-    }
-    fun retrieveEntireList(){
-        filterString.value = ""
-        filteredGames.value = games.value
-    }
-}
-
 object GamesNavigation{
     @Serializable
     data object MainGamesList
@@ -111,7 +88,8 @@ object GamesNavigation{
 
 @Composable
 fun GamesScreen(){
-    val viewModel = viewModel { GamesViewModel() }
+    val viewModelGamesList = viewModel { GamesViewModel() }
+    val viewModelGame = viewModel { GameViewModel() }
     val navController = rememberNavController()
 
     Scaffold (bottomBar = {
@@ -135,7 +113,7 @@ fun GamesScreen(){
                 )
                 NavigationBarItem(
                     onClick = {
-                        viewModel.retrieveEntireList()
+                        viewModelGamesList.retrieveEntireList()
                     },
                     selected = false,
                     icon = {
@@ -156,17 +134,17 @@ fun GamesScreen(){
             navController = navController, startDestination = GamesNavigation.MainGamesList){
             composable<GamesNavigation.MainGamesList> {
                 GamesMainScreen(
-                    viewModel.filteredGames.value,
-                    viewModel.filterString.value,
-                    viewModel::onUpdateFilter,
+                    viewModelGamesList.filteredGames.value,
+                    viewModelGamesList.filterString.value,
+                    viewModelGamesList::onUpdateFilter,
                     goToGame = { navController.navigate(GamesNavigation.GameInfomation(it)) }
                 )
             }
             composable<GamesNavigation.GameInfomation> { backStack ->
                 val gameId = backStack.toRoute<GamesNavigation.GameInfomation>().gameId
+                viewModelGame.getGameWithId(gameId)
                 GameInformation(
-                    gameId,
-                    games = viewModel.games.value!!,
+                    game = viewModelGame.game.value!!,
                     goBack = { navController.navigate(GamesNavigation.MainGamesList) }
                 )
             }
@@ -224,36 +202,32 @@ fun GamesMainScreen(
 }
 
 @Composable
-fun GameInformation(gameId: Int, games: List<Game>, goBack: () -> Unit){
+fun GameInformation(game: Game, goBack: () -> Unit){
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        for (g in games){
-            if (gameId == g.id) {
-                item {
-                    Column (modifier = Modifier.fillMaxWidth().background(color = Color.Blue), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(g.title, fontWeight = FontWeight(900), fontSize = 30.sp)
-                        Text("Made by: " + g.developer, fontWeight = FontWeight(600), fontSize = 15.sp)
-                    }
-                    Spacer(modifier = Modifier.size(30.dp))
-                    AsyncImage(
-                        model = g.imageURL,
-                        contentDescription = "game image",
-                        modifier = Modifier.size(400.dp, 200.dp)
-                    )
-                    Spacer(modifier = Modifier.size(40.dp))
-                    Text("General Info: ", fontWeight = FontWeight(600), fontSize = 20.sp)
-                    Text("Publisher: ${ g.publisher } \nRelease date: ${g.releaseDate} \nGenre: ${g.genre} \nPlatform: ${g.platform}")
-                    Spacer(modifier = Modifier.size(20.dp))
-                    Text("Description: \n" + g.shortDescription)
-                }
-                item {
-                    Button(onClick = { goBack() }, modifier = Modifier.padding(horizontal = 75.dp, vertical = 10.dp)){
-                        Text("Go back")
-                    }
-                    Spacer(modifier = Modifier.size(100.dp))
-                }
+        item {
+            Column (modifier = Modifier.fillMaxWidth().background(color = Color.Blue), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(game.title, fontWeight = FontWeight(900), fontSize = 30.sp)
+                Text("Made by: " + game.developer, fontWeight = FontWeight(600), fontSize = 15.sp)
             }
+            Spacer(modifier = Modifier.size(30.dp))
+            AsyncImage(
+                model = game.imageURL,
+                contentDescription = "game image",
+                modifier = Modifier.size(400.dp, 200.dp)
+            )
+            Spacer(modifier = Modifier.size(40.dp))
+            Text("General Info: ", fontWeight = FontWeight(600), fontSize = 20.sp)
+            Text("Publisher: ${ game.publisher } \nRelease date: ${game.releaseDate} \nGenre: ${game.genre} \nPlatform: ${game.platform}")
+            Spacer(modifier = Modifier.size(20.dp))
+            Text("Description: \n" + game.shortDescription)
+        }
+        item {
+            Button(onClick = { goBack() }, modifier = Modifier.padding(horizontal = 75.dp, vertical = 10.dp)){
+                Text("Go back")
+            }
+            Spacer(modifier = Modifier.size(100.dp))
         }
     }
 }
