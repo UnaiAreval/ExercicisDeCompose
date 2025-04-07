@@ -3,12 +3,18 @@ package cat.itb.m78.exercices.practicaAPI_DB
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import cat.itb.m78.exercices.db.database
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
 class GamesViewModel : ViewModel() {
     val games = mutableStateOf<List<Game>?>(null)
     val filteredGames = mutableStateOf<List<Game>?>(null)
+    val favGamesId = mutableStateOf<List<Int>>(emptyList())
 
     val filterString = mutableStateOf("")
 
@@ -23,6 +29,9 @@ class GamesViewModel : ViewModel() {
         filterString.value = newFilter
         filteredGames.value = games.value?.filter { it.title.startsWith(newFilter) }
     }
+    fun getFavGames(){
+        filteredGames.value!!.filter { favGamesId.value.contains(it.id) }
+    }
     fun retrieveEntireList(){
         filterString.value = ""
         filteredGames.value = games.value
@@ -32,6 +41,7 @@ class GamesViewModel : ViewModel() {
 class GameViewModel : ViewModel() {
     val games = mutableStateOf<List<Game>?>(null)
     val game = mutableStateOf<Game?>(null)
+    val favGamesId = mutableStateOf<List<Int>>(emptyList())
 
     init{
         viewModelScope.launch {
@@ -41,5 +51,12 @@ class GameViewModel : ViewModel() {
 
     fun getGameWithId(gameId: Int){
         game.value = games.value?.first { it.id == gameId }
+    }
+
+    fun addToFavGames(newGameId: Int){
+        favGamesId.value = (favGamesId.value.plus(game.value?.id!!))
+    }
+    fun removeFromFavGames(gameIdToRemove: Int){
+        favGamesId.value = (favGamesId.value.filter { it != gameIdToRemove })
     }
 }
