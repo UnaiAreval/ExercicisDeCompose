@@ -1,0 +1,14 @@
+CREATE TABLE students (
+    id INTEGER PRIMARY KEY NOT NULL,
+    studentId INTEGER NOT NULL,
+    dateMissing TEXT NOT NULL
+);
+CREATE INDEX student_id ON students(studentId);
+selectAll:
+SELECT * FROM students;
+selectStudentIdAndDateMissing:
+SELECT studentId, dateMissing FROM students;
+insert:
+INSERT INTO students(studentId, dateMissing) VALUES (?, CURRENT_DATE);
+delete:
+DELETE FROM students WHERE studentId = (?);

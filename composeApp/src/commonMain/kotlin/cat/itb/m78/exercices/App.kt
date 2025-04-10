@@ -1,6 +1,7 @@
 package cat.itb.m78.exercices
 
 import androidx.compose.runtime.*
+import cat.itb.m78.exercices.Examen_M78P2.StudentsScreen
 
 // Exercicis
 import cat.itb.m78.exercices.exercicis02_State.GoodTime
@@ -30,5 +31,5 @@ import cat.itb.m78.exercices.theme.AppTheme
 
 @Composable
 internal fun App() = AppTheme {
-    GamesScreen()
+    StudentsScreen()
 }
