@@ -7,3 +7,5 @@ selectAll:
 SELECT * FROM favGames;
 insert:
 INSERT INTO favGames(gameId) VALUES (?);
+delete:
+DELETE FROM favGames WHERE gameId = (?);

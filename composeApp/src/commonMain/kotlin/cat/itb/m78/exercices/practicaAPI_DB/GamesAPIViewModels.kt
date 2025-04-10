@@ -41,7 +41,7 @@ class GamesViewModel : ViewModel() {
 class GameViewModel : ViewModel() {
     val games = mutableStateOf<List<Game>?>(null)
     val game = mutableStateOf<Game?>(null)
-    val favGamesId = mutableStateOf<List<Int>>(emptyList())
+    val favGamesId = mutableStateOf( database.gamesFavQueries.selectAll().executeAsList() )
 
     init{
         viewModelScope.launch {
@@ -54,9 +54,11 @@ class GameViewModel : ViewModel() {
     }
 
     fun addToFavGames(newGameId: Int){
-        favGamesId.value = (favGamesId.value.plus(game.value?.id!!))
+        favGamesId.value = database.gamesFavQueries.selectAll().executeAsList()
+        database.gamesFavQueries.insert(newGameId.toLong())
     }
     fun removeFromFavGames(gameIdToRemove: Int){
-        favGamesId.value = (favGamesId.value.filter { it != gameIdToRemove })
+        favGamesId.value = database.gamesFavQueries.selectAll().executeAsList()
+        database.gamesFavQueries.delete(gameIdToRemove.toLong())
     }
 }
