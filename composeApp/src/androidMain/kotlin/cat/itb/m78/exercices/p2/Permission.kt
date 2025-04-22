@@ -11,13 +11,16 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun FeatureThatRequiresCameraPermission() {
+fun FeatureThatRequiresCameraPermission(navigateToCamera: () -> Unit) {
     // Camera permission state
     val cameraPermissionState = rememberPermissionState(
         android.Manifest.permission.CAMERA
     )
     if (cameraPermissionState.status.isGranted) {
         Text("Camera permission Granted")
+        Button(onClick = {navigateToCamera()}) {
+            Text("Go to camera")
+        }
     } else {
         Column {
             val textToShow = if (cameraPermissionState.status.shouldShowRationale) {
