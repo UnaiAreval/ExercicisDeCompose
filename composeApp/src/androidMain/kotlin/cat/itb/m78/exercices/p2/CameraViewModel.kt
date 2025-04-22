@@ -12,7 +12,9 @@ import androidx.camera.core.Preview
 import androidx.camera.core.SurfaceRequest
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.lifecycle.awaitInstance
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
@@ -32,6 +34,8 @@ class CameraViewModel() : ViewModel(){
         )
         try { awaitCancellation() } finally { processCameraProvider.unbindAll() }
     }
+
+    val photoUrl: MutableState<String?> = mutableStateOf(null)
 
     fun takePhoto(context: Context) {
         val name = "photo_"+ System.nanoTime()
@@ -56,6 +60,7 @@ class CameraViewModel() : ViewModel(){
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     Log.d("CameraPreview", "Photo capture succeeded: ${output.savedUri}")
+                    photoUrl.value = "${output.savedUri}"
                 }
             }
         )

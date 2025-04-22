@@ -30,7 +30,9 @@ fun Camera(
         BottomAppBar (
             actions = {
                 NavigationBarItem(
-                    onClick = { takePhoto(context) },
+                    onClick = {
+                        takePhoto(context)
+                    },
                     selected = false,
                     icon = {},
                     label = { Text("Take Photo") }
