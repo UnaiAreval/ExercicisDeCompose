@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import m78exercices.composeapp.generated.resources.Res
+import m78exercices.composeapp.generated.resources.heartIcon
 import org.jetbrains.compose.resources.painterResource
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -33,16 +34,16 @@ fun Camera(
                 NavigationBarItem(
                     onClick = { takePhoto(context) },
                     selected = false,
-                    icon = {/*
+                    icon = {
                         Icon(
-                            painterResource(Res.drawable.),
+                            painterResource(Res.drawable.heartIcon),
                             contentDescription = "camera icon",
                             modifier = Modifier.size(30.dp)
-                        )*/
+                        )
                     },
                     label = { Text("Take Photo") }
                 )
-                Button(onClick = { takePhoto(context) }) { Text("Take Photo") }
+                //Button(onClick = { takePhoto(context) }) { Text("Take Photo") }
                 Button(onClick = { navigateToPhotosList() }) { Text("Galeri") }
             },
             modifier = Modifier.fillMaxWidth()
