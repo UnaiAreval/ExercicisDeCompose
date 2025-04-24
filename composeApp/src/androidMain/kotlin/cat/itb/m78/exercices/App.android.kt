@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import cat.itb.m78.exercices.maps.MapsScreen
+import cat.itb.m78.exercices.mapsApp.MapScreen
 import cat.itb.m78.exercices.p2.CameraScreen
 import cat.itb.m78.exercices.p2.FeatureThatRequiresCameraPermission
 
@@ -14,7 +14,7 @@ class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { MapsScreen() }
+        setContent { MapScreen() }
     }
 }
 
