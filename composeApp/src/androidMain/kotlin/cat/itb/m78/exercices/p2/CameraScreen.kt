@@ -49,9 +49,7 @@ fun CameraScreen(){
                     context = context
                 )
             }else{
-                FeatureThatRequiresCameraPermission(
-                    navigateToCamera = { navController.navigate(CameraApp.Camera) }
-                )
+                FeatureThatRequiresCameraPermission()
 
             }
         }

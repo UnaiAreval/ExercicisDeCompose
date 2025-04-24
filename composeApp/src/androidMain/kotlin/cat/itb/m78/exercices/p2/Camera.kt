@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import m78exercices.composeapp.generated.resources.Res
-import m78exercices.composeapp.generated.resources.heartIcon
+import m78exercices.composeapp.generated.resources.cameraIcon
 import org.jetbrains.compose.resources.painterResource
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -36,7 +36,7 @@ fun Camera(
                     selected = false,
                     icon = {
                         Icon(
-                            painterResource(Res.drawable.heartIcon),
+                            painterResource(Res.drawable.cameraIcon),
                             contentDescription = "camera icon",
                             modifier = Modifier.size(30.dp)
                         )
