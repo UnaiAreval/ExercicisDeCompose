@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlinx.serialization)
     id("app.cash.sqldelight") version "2.0.2"
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 composeCompiler {
@@ -88,6 +89,8 @@ kotlin {
             implementation("androidx.camera:camera-compose:1.5.0-alpha06")
             implementation("androidx.camera:camera-lifecycle:1.5.0-alpha06")
             implementation("androidx.camera:camera-extensions:1.5.0-alpha06")
+
+            implementation("com.google.maps.android:maps-compose:6.6.0")
         }
 
         jvmMain.dependencies {
@@ -131,7 +134,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:2.2.3") // Para negociación de contenido
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.2.3") // Para serialización de JSON con Kotlin
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0") // Versión de Kotlinx Serialization*/
-
+    // Maps SDK for Android
 
 }
 
@@ -169,4 +172,16 @@ sqldelight {
             verifyMigrations.set(true)
         }
     }
+}
+
+secrets {
+    // To add your Maps API key to this project:
+    // 1. If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
+    // 2. Add this line, where YOUR_API_KEY is your API key:
+    //        MAPS_API_KEY=YOUR_API_KEY
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
 }
