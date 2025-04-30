@@ -27,10 +27,10 @@ fun MapScreen(
         googleMapOptionsFactory = {
             GoogleMapOptions().mapId("DEMO_MAP_ID")
         },
-        cameraPositionState = cameraPositionState/*,
+        cameraPositionState = cameraPositionState,
         onMapLongClick = {
             navigateToMarkAdition(listOf(cords.latitude, cords.longitude))
-        }*/
+        }
     ) {
         for (mark in marks){
             AdvancedMarker(

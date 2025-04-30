@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -86,6 +87,16 @@ fun MapAppScreen(){
                     )
                 }
             }
+            composable<MapNavigation.AddMark> { backStack -> 
+                val cs = LatLng(
+                    backStack.toRoute<MapNavigation.AddMark>().cords[0],
+                    backStack.toRoute<MapNavigation.AddMark>().cords[1]
+                )
+                AddMarkToTheMap(
+                    cords = cs,
+                    backToTheMap = { navController.navigate(MapNavigation.PrincipalScreen) }
+                )
+            }
         }
     }
 }
@@ -95,7 +106,7 @@ data class Mark(
     val longitude: String,
     val title: String,
     val imageLoc: String,
-    val description: String
+    val description: String?
 )
 
 class MapViewModel : ViewModel(){
