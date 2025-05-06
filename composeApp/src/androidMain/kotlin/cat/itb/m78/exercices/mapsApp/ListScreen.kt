@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 
 @Composable
 fun MarkerListScreen(
@@ -25,6 +26,15 @@ fun MarkerListScreen(
                     Text(mark.title, fontSize = 15.sp)
                     Text("Coordenades: \n ·Latitud: ${mark.latitude} \n ·Longitud: ${mark.longitude}")
                     Spacer(modifier = Modifier.size(50.dp))
+                    AsyncImage(
+                        model = mark.imageLoc,
+                        contentDescription = "mark image",
+                        modifier = Modifier.size(400.dp)
+                    )
+                    if (mark.description != null){
+                        Text("Descripció", fontSize = 30.sp)
+                        Text(mark.description)
+                    }
                 }
             }
         }

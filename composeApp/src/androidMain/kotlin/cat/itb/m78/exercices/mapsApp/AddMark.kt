@@ -1,7 +1,14 @@
 package cat.itb.m78.exercices.mapsApp
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -10,11 +17,20 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.maps.model.LatLng
+import m78exercices.composeapp.generated.resources.Res
+import m78exercices.composeapp.generated.resources.cameraIcon
+import m78exercices.composeapp.generated.resources.trivial
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -23,36 +39,58 @@ fun AddMarkToTheMap(
     backToTheMap: () -> Unit
 ){
     val newMarkTitle = remember { mutableStateOf("") }
-    val newMarkLat = remember { mutableStateOf("") }
-    val newMarkLng = remember { mutableStateOf("") }
+    val newMarkLat = remember { mutableStateOf("${cords.latitude}") }
+    val newMarkLng = remember { mutableStateOf("${cords.longitude}") }
+    val imageUri = remember { mutableStateOf("") }
 
-    Column (horizontalAlignment = Alignment.CenterHorizontally){
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize().padding(20.dp)
+    ){
+        Text("Titol del grafiti: ", fontSize = 20.sp)
         TextField(
             value = newMarkTitle.value,
             label = { Text(text = "") },
             onValueChange = { newMarkTitle.value = it },
         )
         if (newMarkTitle.value == ""){
-            Text("Cal un titol pel marcador")
+            Text("Cal un titol pel marcador", color = Color.Red)
         }
-        TextField(
-            value = newMarkTitle.value,
-            label = { Text(text = "") },
-            onValueChange = { newMarkTitle.value = it },
-        )
-        if (newMarkLat.value.all { it.isDigit() } || newMarkLat.value.indexOf("-") != -1){
-            Text("La latitud ha de ser un número", color = Color.Red)
+
+        Spacer(modifier = Modifier.size(30.dp))
+
+        Text("Cordenades: ", fontSize = 20.sp)
+        Text(" · Latitud: ${newMarkLat.value} \n · Longitud ${newMarkLng.value}")
+
+        Spacer(modifier = Modifier.size(30.dp))
+
+        Button (
+            modifier = Modifier.padding(10.dp),
+            onClick = {
+            //Anar a la camara
+            }
+        ){
+            if (imageUri.value.isNotEmpty()){
+                AsyncImage(
+                    model = imageUri.value,
+                    contentDescription = "mark image",
+                    modifier = Modifier.size(400.dp)
+                )
+            }
+            else {
+                Column (horizontalAlignment = Alignment.CenterHorizontally){
+                    Image(
+                        painter = painterResource(Res.drawable.cameraIcon),
+                        modifier = Modifier.size(150.dp).padding(15.dp).clip(CircleShape),
+                        contentDescription = null
+                    )
+                    Text("Afegir foto")
+                }
+            }
         }
-        TextField(
-            value = newMarkLng.value,
-            label = { Text(text = "") },
-            onValueChange = { newMarkLng.value = it },
-        )
-        if (newMarkLng.value.all { it.isDigit() } || newMarkLng.value.indexOf("-") != -1){
-            Text("La longitud ha de ser un número", color = Color.Red)
-        }
-        //Els if estan del rebes
-        Row {
+        if (imageUri.value.isEmpty()){ Text("Cal una imatge del grafiti", color = Color.Red) }
+
+        Row (verticalAlignment = Alignment.Bottom){
             Button(
                 onClick = {
                     backToTheMap()
@@ -61,11 +99,9 @@ fun AddMarkToTheMap(
             }
             Button(
                 onClick = {
-                    if (newMarkLng.value.all { it.isDigit() } ||
-                        newMarkLng.value.indexOf("-") != -1 ||
-                        newMarkLat.value.all { it.isDigit() } ||
-                        newMarkLat.value.indexOf("-") != -1)
-                    //Guardar el marcador
+                    if (newMarkTitle.value.isNotEmpty()){
+                        //Guardar el marcador
+                    }
                     backToTheMap()
                 }) {
                 Text("Afegir")

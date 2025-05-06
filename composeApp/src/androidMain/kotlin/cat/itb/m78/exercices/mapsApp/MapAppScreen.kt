@@ -7,7 +7,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -33,7 +32,7 @@ object MapNavigation{
     @Serializable
     data object PrincipalScreen
     @Serializable
-    data class AddMark(val cords: List<Double>)
+    data class AddMark(val lat: Float, val lng: Float)
 }
 
 @SuppressLint("UnrememberedMutableState")
@@ -81,16 +80,18 @@ fun MapAppScreen(){
                 else{
                     MapScreen(
                         marks = mapViewModel.marks.value!!,
-                        cameraPositionState,
-                        cords.value,
-                        navigateToMarkAdition = { navController.navigate(MapNavigation.AddMark(it)) }
+                        cameraPositionState =  cameraPositionState,
+                        navigateToMarkAdition = { navController.navigate(MapNavigation.AddMark(
+                            lat = cords.value.latitude.toFloat(),
+                            lng = cords.value.longitude.toFloat()))
+                        }
                     )
                 }
             }
             composable<MapNavigation.AddMark> { backStack -> 
                 val cs = LatLng(
-                    backStack.toRoute<MapNavigation.AddMark>().cords[0],
-                    backStack.toRoute<MapNavigation.AddMark>().cords[1]
+                    backStack.toRoute<MapNavigation.AddMark>().lat.toDouble(),
+                    backStack.toRoute<MapNavigation.AddMark>().lng.toDouble()
                 )
                 AddMarkToTheMap(
                     cords = cs,
