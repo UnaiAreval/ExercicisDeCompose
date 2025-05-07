@@ -37,7 +37,12 @@ import org.jetbrains.compose.resources.painterResource
 fun AddMarkToTheMap(
     cords: LatLng,
     backToTheMap: () -> Unit
+    //navigateToCamera: () -> Unit, comeBackFromCamera: (val uri: String) -> Unit
 ){
+    val cameraPermissionState = rememberPermissionState(
+        android.Manifest.permission.CAMERA
+    )
+
     val newMarkTitle = remember { mutableStateOf("") }
     val newMarkLat = remember { mutableStateOf("${cords.latitude}") }
     val newMarkLng = remember { mutableStateOf("${cords.longitude}") }
@@ -54,7 +59,7 @@ fun AddMarkToTheMap(
             onValueChange = { newMarkTitle.value = it },
         )
         if (newMarkTitle.value == ""){
-            Text("Cal un titol pel marcador", color = Color.Red)
+            Text("* Cal un titol pel marcador", color = Color.Red)
         }
 
         Spacer(modifier = Modifier.size(30.dp))
@@ -67,7 +72,12 @@ fun AddMarkToTheMap(
         Button (
             modifier = Modifier.padding(10.dp),
             onClick = {
-            //Anar a la camara
+                if (cameraPermissionState.status.isGranted){
+                    //et porta a la camera
+                }
+                else{
+                    //et porta a la pantalla de permissos
+                }
             }
         ){
             if (imageUri.value.isNotEmpty()){
@@ -88,7 +98,7 @@ fun AddMarkToTheMap(
                 }
             }
         }
-        if (imageUri.value.isEmpty()){ Text("Cal una imatge del grafiti", color = Color.Red) }
+        if (imageUri.value.isEmpty()){ Text("* Cal una imatge del grafiti", color = Color.Red) }
 
         Row (verticalAlignment = Alignment.Bottom){
             Button(
@@ -99,13 +109,16 @@ fun AddMarkToTheMap(
             }
             Button(
                 onClick = {
-                    if (newMarkTitle.value.isNotEmpty()){
+                    if (newMarkTitle.value.isNotEmpty() && imageUri.value.isNotEmpty()){
                         //Guardar el marcador
                     }
                     backToTheMap()
                 }) {
                 Text("Afegir")
             }
+        }
+        if (newMarkTitle.value.isEmpty() && imageUri.value.isEmpty()) {
+            Text("* Si no hi ha un titol i una imatge no es guardara el marcador", color = Color.Red)
         }
     }
 }
