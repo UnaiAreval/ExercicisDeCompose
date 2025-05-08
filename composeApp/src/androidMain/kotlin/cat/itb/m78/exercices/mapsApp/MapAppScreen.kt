@@ -1,12 +1,23 @@
 package cat.itb.m78.exercices.mapsApp
 
 import android.annotation.SuppressLint
+import android.content.Context
+import androidx.camera.compose.CameraXViewfinder
+import androidx.camera.core.SurfaceRequest
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -22,22 +33,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import cat.itb.m78.exercices.p2.FeatureThatRequiresCameraPermission
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import m78exercices.composeapp.generated.resources.Res
+import m78exercices.composeapp.generated.resources.cameraIcon
+import org.jetbrains.compose.resources.painterResource
 
 object MapNavigation{
     @Serializable
     data object PrincipalScreen
     @Serializable
     data class AddMark(val lat: Float, val lng: Float)
+    @Serializable
+    data object Camera
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun MapAppScreen(){
+    val cameraPermissionState = rememberPermissionState(
+        android.Manifest.permission.CAMERA
+    )
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     val mapViewModel = viewModel{ MapViewModel() }
@@ -95,8 +120,21 @@ fun MapAppScreen(){
                 )
                 AddMarkToTheMap(
                     cords = cs,
-                    backToTheMap = { navController.navigate(MapNavigation.PrincipalScreen) }
+                    backToTheMap = { navController.navigate(MapNavigation.PrincipalScreen) },
+                    navigateToCamera = { navController.navigate(MapNavigation.Camera) }
                 )
+            }
+            composable<MapNavigation.Camera> {
+                if (cameraPermissionState.status.isGranted){
+                    //et porta a la camera
+                    Text("No implementat")
+                    Button(onClick = { navController.navigate(MapNavigation.PrincipalScreen) }) {
+                        Text("Tornar enrrera")
+                    }
+                }
+                else{
+                    FeatureThatRequiresCameraPermission()
+                }
             }
         }
     }
@@ -118,6 +156,45 @@ class MapViewModel : ViewModel(){
             marks.value = listOf(
                 Mark("-34.0", "151.0","Marker in Sydney", "", ""),
                 Mark("35.66", "139.6","Marker in Tokyo", "", "")
+            )
+        }
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun MapCamera(
+    goBackToAddMark: (String) -> Unit,
+    takePhoto: (Context)-> Unit,
+    surfaceRequest: SurfaceRequest?,
+    context: Context
+){
+    Scaffold (bottomBar = {
+        BottomAppBar (
+            actions = {
+                NavigationBarItem(
+                    onClick = {
+                        takePhoto(context)
+                        /*goBackToAddMark("")*/
+                    },
+                    selected = false,
+                    icon = {
+                        Icon(
+                            painterResource(Res.drawable.cameraIcon),
+                            contentDescription = "camera icon",
+                            modifier = Modifier.size(30.dp)
+                        )
+                    },
+                    label = { Text("Take Photo") }
+                )
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+    }) {
+        surfaceRequest?.let { request ->
+            CameraXViewfinder(
+                surfaceRequest = request,
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

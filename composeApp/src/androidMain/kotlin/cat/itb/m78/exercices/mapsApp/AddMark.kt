@@ -32,17 +32,12 @@ import m78exercices.composeapp.generated.resources.cameraIcon
 import m78exercices.composeapp.generated.resources.trivial
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AddMarkToTheMap(
     cords: LatLng,
-    backToTheMap: () -> Unit
-    //navigateToCamera: () -> Unit, comeBackFromCamera: (val uri: String) -> Unit
+    backToTheMap: () -> Unit,
+    navigateToCamera: () -> Unit,// comeBackFromCamera: (val uri: String) -> Unit
 ){
-    val cameraPermissionState = rememberPermissionState(
-        android.Manifest.permission.CAMERA
-    )
-
     val newMarkTitle = remember { mutableStateOf("") }
     val newMarkLat = remember { mutableStateOf("${cords.latitude}") }
     val newMarkLng = remember { mutableStateOf("${cords.longitude}") }
@@ -72,12 +67,7 @@ fun AddMarkToTheMap(
         Button (
             modifier = Modifier.padding(10.dp),
             onClick = {
-                if (cameraPermissionState.status.isGranted){
-                    //et porta a la camera
-                }
-                else{
-                    //et porta a la pantalla de permissos
-                }
+                navigateToCamera()
             }
         ){
             if (imageUri.value.isNotEmpty()){
