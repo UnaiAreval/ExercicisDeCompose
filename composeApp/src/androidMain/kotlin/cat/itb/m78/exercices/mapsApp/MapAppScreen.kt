@@ -40,6 +40,8 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.set
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import m78exercices.composeapp.generated.resources.Res
@@ -121,7 +123,9 @@ fun MapAppScreen(){
                 AddMarkToTheMap(
                     cords = cs,
                     backToTheMap = { navController.navigate(MapNavigation.PrincipalScreen) },
-                    navigateToCamera = { navController.navigate(MapNavigation.Camera) }
+                    kipImageUri = { mapViewModel.KippLastUri(it) },
+                    addNewMark = { mapViewModel.AddNewMark(it) },
+                    lastImageUri = mapViewModel.kippUri
                 )
             }
             composable<MapNavigation.Camera> {
@@ -144,27 +148,45 @@ data class Mark(
     val latitude: String,
     val longitude: String,
     val title: String,
-    val imageLoc: String,
+    val imageUri: String,
     val description: String?
 )
 
+
+private const val LAST_URI_KIPPER_KEY = "uri"
 class MapViewModel : ViewModel(){
     val marks: MutableState<List<Mark>?> = mutableStateOf(null)
+    val settings: Settings = Settings()
+    val kippUri = settings.getString(LAST_URI_KIPPER_KEY, "")
+
+    val newMark: MutableState<Mark?> = mutableStateOf(null)
 
     init {
         viewModelScope.launch {
             marks.value = listOf(
+                Mark("41.453583295083675", "2.186311455073678", "Institut Tecnològic de Barcelona", "https://dca.cat/wp-content/uploads/2022/05/ITB_Logo_ITBdesc_800-Direccio-ITB-Alberto-Vila.png", ""),
                 Mark("-34.0", "151.0","Marker in Sydney", "", ""),
                 Mark("35.66", "139.6","Marker in Tokyo", "", "")
             )
         }
+    }
+    fun KippLastUri(lastUri: String){
+        settings[LAST_URI_KIPPER_KEY] = lastUri
+    }
+    fun AddNewMark(markToAdd: Mark){
+        if (markToAdd.description == null){
+            newMark.value = Mark(markToAdd.latitude, markToAdd.longitude, markToAdd.title, markToAdd.imageUri, "No hi ha descripció")
+        }
+        else{
+            newMark.value = markToAdd
+        }
+        //afegirla a la base de dades
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MapCamera(
-    goBackToAddMark: (String) -> Unit,
     takePhoto: (Context)-> Unit,
     surfaceRequest: SurfaceRequest?,
     context: Context
@@ -175,7 +197,6 @@ fun MapCamera(
                 NavigationBarItem(
                     onClick = {
                         takePhoto(context)
-                        /*goBackToAddMark("")*/
                     },
                     selected = false,
                     icon = {

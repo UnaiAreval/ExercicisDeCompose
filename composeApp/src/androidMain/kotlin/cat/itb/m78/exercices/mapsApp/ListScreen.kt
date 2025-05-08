@@ -27,7 +27,7 @@ fun MarkerListScreen(
                     Text("Coordenades: \n ·Latitud: ${mark.latitude} \n ·Longitud: ${mark.longitude}")
                     Spacer(modifier = Modifier.size(50.dp))
                     AsyncImage(
-                        model = mark.imageLoc,
+                        model = mark.imageUri,
                         contentDescription = "mark image",
                         modifier = Modifier.size(400.dp)
                     )
